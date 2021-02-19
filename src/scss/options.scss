@@ -1,0 +1,14 @@
+.options {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+width: 400px;
+height: 400px;
+
+&__button {
+    padding: 20px;
+    cursor: pointer;
+    font-size: 20px;
+}
+}
