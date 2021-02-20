@@ -1,0 +1,92 @@
+.card {
+    overflow: hidden;
+    position: relative;
+    @include equalSides(270px);
+    margin: 30px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transform: scale(1);
+    transition: all .7s ease-in;
+    box-shadow:0px 2px 9px 8px rgba(13, 13, 13, 0.1);
+
+    &:hover {
+      box-shadow: none;
+        transform: scale(1.05);
+        transition: all .4s ease-in;
+       }
+    
+    // .turn {
+    //   @include equalSides(40px);
+    //   margin-left: 20px;
+    //   transform: rotate(0deg);
+    //   transition: all .4s ease-in;
+
+    //   &:hover {
+    //     transform: rotate(-180deg);
+    //   }
+
+    //   img {
+    //     @include equalSides(100%);
+    //   }
+    // }
+
+    &__image {
+      width: 82%;
+      overflow: hidden;
+      padding-top: 15px;
+      transition: all .4s ease-in;
+      user-select: none;
+
+        img {
+        @include equalSides(100%);
+        object-fit: contain;   
+        }
+    } 
+
+    // &__content {
+    //   opacity: 1;
+    //   height: fit-content;
+    //   transition: all .4s ease-in;
+    //   padding: 10px;
+    //   font-size: 30px;
+    //   display: flex;
+    //   width: 72%;
+    //   justify-content: flex-end;
+    // }
+
+    // &__front &__content {
+    //   justify-content: flex-end;
+    // }
+
+    // &__back &__content {
+    //   justify-content: center;
+    // }
+
+    &__front,
+    &__back {
+      @include colomnFlex();
+      @include centerFlex();
+      @include fixed(absolute);
+      @include equalSides(100%);
+      top: 0;
+      transition: 1s;
+      backface-visibility: hidden;
+      border-radius: 10px;
+    }
+
+    &__front {
+      transition: all .4s ease-in;
+      background: rgb(240,155,121);
+      background: linear-gradient(180deg, rgba(240,155,121,1) 23%, rgba(240,155,121,1) 41%, rgba(255,255,255,1) 100%);
+    }
+
+    &__back {
+      background: rgb(255,178,132);
+      background: linear-gradient(180deg, rgba(255,178,132,1) 22%, rgba(255,236,225,1) 67%, rgba(255,255,255,1) 100%);
+      transform: rotateY(180deg);
+    }
+
+  }
+
+.front-rotate {transform: rotateY(180deg);}
+.back-rotate {transform: rotateY(360deg)}

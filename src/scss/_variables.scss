@@ -1,0 +1,35 @@
+@mixin colomnFlex($j-c: center, $dir: column) {
+    display: flex;
+    flex-direction: $dir;
+    justify-content: $j-c;
+}
+
+@mixin centerFlex() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin fontA {
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+}
+
+@mixin fixed($pos) {
+  position: $pos;
+  left: 0;
+  right: 0;
+}
+
+@mixin equalSides($size) {
+  width: $size;
+  height: $size;
+}
+
+$maxWidth: 1400px;
+$componentsPlay:#D1D090;
+$backgroundPlay: #C2D7D0;;
+$componentsTrain: #CCE2CB;
+$backgroundTrain: #CBAACB;
+$fontMenuColor: #A7D9C9;

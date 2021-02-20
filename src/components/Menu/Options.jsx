@@ -43,7 +43,7 @@ const OptionsPage = ({ getClick }) => {
 
       </div>
       <MenuButton
-        onClick={getClick}
+        getClick={getClick}
         text={title}
         path={path}
       />

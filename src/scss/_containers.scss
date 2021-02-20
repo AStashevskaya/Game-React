@@ -1,0 +1,109 @@
+#root {
+    min-height: 100vh;
+    @include equalSides (100%);
+    background-color: #61dafb;;
+    position: relative;
+
+    @media (max-width: 768px) {
+        padding: 0 10px;
+        }
+
+    .footer__container {
+        max-width: $maxWidth;
+        @include equalSides(100%);
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        padding: 0 10%;
+        flex-wrap: wrap;
+        span {
+            margin: 0 20px;
+        }
+    
+
+        @media (max-width: 768px) {
+            padding: 0 10px;
+            }
+    }
+    .header-container {
+        max-width: $maxWidth;
+        padding: 12px 30px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+
+        @media (max-width: 768px) {
+        padding: 12px 12px;
+        }
+    }
+    
+    .content-container {
+        max-width: $maxWidth;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        margin-bottom: 50px;
+    }
+
+    // .content-container {
+    //     max-width: $maxWidth;
+    //     margin: 0 auto;
+    //     display: flex;
+    //     justify-content: space-evenly;
+    //     flex-wrap: wrap;
+    //     margin-bottom: 50px;
+    // }
+
+    .gamefield {
+        max-width: $maxWidth;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        margin-bottom: 50px;
+    }
+
+
+    .answer-container {
+        height: 0;
+        transition: all .4s ease-in;
+        display: none;
+    }
+
+//     .title-container {
+//     display: flex;
+//     justify-content: center;
+//     padding: 20px;
+//     font-size: 20px;
+// }
+// header,footer {
+//     width: 100%;
+//     @include fixed(fixed);
+//     background-color: #ECD5E3;
+//     z-index: 10;
+// }
+// header {
+//     height: 70px;
+//     top: 0; 
+
+//     @media (max-width: 768px) {
+//     height: 60px;
+//     }
+// }
+// main {
+//     position: relative;
+//     margin-top: 70px;
+//     height: 100%;
+ 
+//     @media (max-width: 768px) {
+//     height: 60px;
+//     }
+// }
+// footer {
+//     height: 50px;
+//     bottom: 0;
+//     z-index: 5;
+// }
+}

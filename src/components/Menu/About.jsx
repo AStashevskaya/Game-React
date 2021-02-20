@@ -12,7 +12,7 @@ const AboutPage = ({ getClick }) => {
       <h1>about </h1>
 
       <MenuButton
-        onClick={getClick}
+        getClick={getClick}
         text={title}
         path={path}
       />

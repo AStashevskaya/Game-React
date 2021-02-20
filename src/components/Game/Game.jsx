@@ -6,6 +6,7 @@ import MenuButton from '../Menu/MenuButton';
 
 import getRandomArray from '../../utils/getRandomArray';
 import englishCards from '../../data/englishCards';
+import GameField from './GameField';
 
 const GamePage = ({ getClick }) => {
   const { path, title } = menuLink;
@@ -29,10 +30,9 @@ const GamePage = ({ getClick }) => {
 
   return (
     <div className="game">
-      game
-
+      <GameField cards={cards} />
       <MenuButton
-        onClick={getClick}
+        getClick={getClick}
         text={title}
         path={path}
       />
