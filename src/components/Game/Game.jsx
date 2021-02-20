@@ -32,7 +32,7 @@ const GamePage = ({ getClick }) => {
       game
 
       <MenuButton
-        getClick={getClick}
+        onClick={getClick}
         text={title}
         path={path}
       />

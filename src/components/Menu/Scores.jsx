@@ -12,7 +12,7 @@ const ScoresPage = ({ getClick }) => {
       <h1> scores </h1>
 
       <MenuButton
-        getClick={getClick}
+        onClick={getClick}
         text={title}
         path={path}
       />
