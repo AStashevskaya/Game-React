@@ -1,13 +1,19 @@
 /* eslint-disable jsx-a11y/media-has-caption */
-import React, { useRef, useEffect, useState } from 'react';
+import React, {
+  useRef, useEffect, useState,
+} from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import soundButton from '../../assets/sounds/button.mp3';
 import menuMusic from '../../assets/sounds/menu.mp3';
 
-const AudioComponent = ({ MusicOn, SoundOn, isClicked }) => {
+const AudioComponent = ({ isClicked }) => {
   const musicRef = useRef();
   const audioRef = useRef();
+
+  const isMusicOn = useSelector((state) => state.musicOn);
+  const isSoundOn = useSelector((state) => state.soundOn);
 
   const [currentClickSound, setCurrentClickSound] = useState('');
   //   const [currentMusic, setCurrentMusic] = useState('');
@@ -16,12 +22,13 @@ const AudioComponent = ({ MusicOn, SoundOn, isClicked }) => {
 
   const setMusic = () => {
     if (!music) return;
-    if (MusicOn) {
+
+    if (isMusicOn) {
       music.play();
       music.loop = true;
     }
 
-    if (!MusicOn) music.pause();
+    if (!isMusicOn) music.pause();
   };
 
   useEffect(() => {
@@ -29,13 +36,32 @@ const AudioComponent = ({ MusicOn, SoundOn, isClicked }) => {
       setCurrentClickSound(soundButton);
     }
 
-    if (isClicked && SoundOn) audio.play();
+    if (isClicked && isSoundOn) audio.play();
 
     setMusic();
-  }, [MusicOn, SoundOn, currentClickSound, isClicked]);
+  }, [isMusicOn, isSoundOn, currentClickSound, isClicked]);
+
+  // const setMusic = () => {
+  //   if (!music) return;
+  //   if (MusicOn) {
+  //     music.play();
+  //     music.loop = true;
+  //   }
+
+  //   if (!MusicOn) music.pause();
+  // };
+
+  // useEffect(() => {
+  //   if (currentClickSound !== soundButton) {
+  //     setCurrentClickSound(soundButton);
+  //   }
+
+  //   if (isClicked && SoundOn) audio.play();
+
+  //   setMusic();
+  // }, [MusicOn, SoundOn, currentClickSound, isClicked]);
 
   return (
-
     <>
       <audio
         src={menuMusic}
@@ -50,8 +76,8 @@ const AudioComponent = ({ MusicOn, SoundOn, isClicked }) => {
 };
 
 AudioComponent.defaultProps = {
-  MusicOn: false,
-  SoundOn: false,
+  // MusicOn: false,
+  // SoundOn: false,
   isClicked: false,
   // toggleMusic: () => {},
   // toggleSound: () => {},
@@ -59,8 +85,8 @@ AudioComponent.defaultProps = {
 };
 
 AudioComponent.propTypes = {
-  MusicOn: PropTypes.bool,
-  SoundOn: PropTypes.bool,
+  // MusicOn: PropTypes.bool,
+  // SoundOn: PropTypes.bool,
   isClicked: PropTypes.bool,
   // toggleMusic: PropTypes.func,
   // toggleSound: PropTypes.func,
