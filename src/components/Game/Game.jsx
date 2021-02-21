@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { menuLink } from '../../data/navBarData';
@@ -7,20 +7,23 @@ import MenuButton from '../Menu/MenuButton';
 import getRandomArray from '../../utils/getRandomArray';
 import englishCards from '../../data/englishCards';
 import GameField from './GameField';
+import Score from './Score';
 
 const GamePage = ({ getClick }) => {
   const { path, title } = menuLink;
+  const [score, setScore] = useState(0);
   // const [randomCards, setRandomCards] = useState([]);
-  const generateArr = () => {
+  const generateCards = () => {
     const randomArr = getRandomArray(6, englishCards);
-    const secondArr = randomArr.map((el) => {
-      const newCard = { ...el, card: 2 };
-      return newCard;
+    let cards = [...randomArr, ...randomArr];
+    cards = cards.map((el, idx) => {
+      const newEl = { ...el, id: idx + 1 };
+      return newEl;
     });
-    const cards = [...randomArr, ...secondArr];
     return cards;
   };
-  const cards = generateArr();
+
+  const cards = generateCards();
 
   console.log(cards);
 
@@ -30,7 +33,8 @@ const GamePage = ({ getClick }) => {
 
   return (
     <div className="game">
-      <GameField cards={cards} />
+      <Score score={score} />
+      <GameField cards={cards} score={score} setscore={setScore} />
       <MenuButton
         getClick={getClick}
         text={title}

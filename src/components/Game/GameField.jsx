@@ -1,11 +1,12 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import Card from './Card';
 
-const GameField = ({ cards }) => {
+const GameField = ({ cards, score, setscore }) => {
   const [cardsClosed, setCardsClosed] = useState(false);
+  // const [score, setScore] = useState(0);
+  const [cardsArr, setCardsArr] = useState(cards);
   const [openedCards, setOpendeCards] = useState([]);
   const [mached, setMached] = useState([]);
 
@@ -15,26 +16,26 @@ const GameField = ({ cards }) => {
     }, 1000);
   }, [cardsClosed]);
 
-  const arr = cards.map((el, idx) => {
-    const newEl = { ...el, id: idx + 1 };
-    return newEl;
-  });
-
-  const [arr1, setArr1] = useState(arr);
-  console.log(setArr1);
-
   useEffect(() => {
     if (openedCards.length === 2) {
       const [a, b] = openedCards;
       if (a.index === b.index) {
+        if (a.clickedTimes === b.clickedTimes && a.clickedTimes === 1) {
+          setscore(score + 5);
+        } else {
+          setscore(score + 1);
+        }
+
         setMached([...mached, a, b]);
         setOpendeCards([]);
       } else {
         setTimeout(() => {
-          arr1.forEach((el) => {
+          cardsArr.forEach((el) => {
+            if (mached.includes(el)) return;
+
             el.isFlipped = false;
           });
-          setArr1(arr1);
+          setCardsArr(cardsArr);
           setOpendeCards([]);
         }, 800);
       }
@@ -42,24 +43,23 @@ const GameField = ({ cards }) => {
   }, [openedCards]);
 
   const handleClick = (card) => {
-    const flippedCard = arr1.find((el) => el.id === card.id);
+    if (!cardsClosed || openedCards.length > 2 || mached.includes(card)) return;
+    const flippedCard = cardsArr.find((el) => el.id === card.id);
     flippedCard.isFlipped = true;
-    setArr1(arr1);
+    flippedCard.clickedTimes += 1;
+    setCardsArr(cardsArr);
     setOpendeCards([...openedCards, card]);
   };
 
-  console.log(arr1);
-
   return (
     <div className="gamefield">
-      {arr1.map((card) => (
+      {cardsArr.map((card) => (
         <Card
           key={card.id}
           title={card.title}
           frontRotate={cardsClosed && !card.isFlipped ? 'front-rotate' : ''}
           backRotate={cardsClosed && !card.isFlipped ? 'back-rotate' : ''}
           handleClick={() => handleClick(card)}
-          isFlipped={card.isFlipped}
         />
       ))}
     </div>
@@ -69,11 +69,15 @@ const GameField = ({ cards }) => {
 GameField.defaultProps = {
 
   cards: [],
+  score: 0,
+  setscore: () => {},
 };
 
 GameField.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   cards: PropTypes.array,
+  score: PropTypes.number,
+  setscore: PropTypes.func,
 //   correctCards: PropTypes.array,
 };
 
