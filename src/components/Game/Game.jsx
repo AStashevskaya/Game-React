@@ -22,8 +22,6 @@ const GamePage = ({ getClick }) => {
   };
   const cards = generateArr();
 
-  console.log(cards);
-
   useEffect(() => {
 
   }, []);

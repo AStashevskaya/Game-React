@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
@@ -8,6 +7,7 @@ const GameField = ({ cards }) => {
   const [cardsClosed, setCardsClosed] = useState(false);
   const [openedCards, setOpendeCards] = useState([]);
   const [mached, setMached] = useState([]);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     setInterval(() => {
@@ -21,34 +21,47 @@ const GameField = ({ cards }) => {
   });
 
   const [arr1, setArr1] = useState(arr);
-  console.log(setArr1);
+
+  const close = () => {
+    setTimeout(() => {
+      arr1.forEach((el) => {
+        if (!mached.includes(el)) el.isFlipped = false;
+      });
+      setArr1(arr1);
+      setOpendeCards([]);
+    }, 800);
+  };
+
+  const setCorrect = (a, b) => {
+    setCount(count + 1);
+    if (a.clickedTimes === b.clickedTimes && a.clickedTimes === 1) {
+      setCount(count + 5);
+    }
+    setMached([...mached, a, b]);
+    setOpendeCards([]);
+  };
 
   useEffect(() => {
     if (openedCards.length === 2) {
       const [a, b] = openedCards;
       if (a.index === b.index) {
-        setMached([...mached, a, b]);
-        setOpendeCards([]);
+        setCorrect(a, b);
       } else {
-        setTimeout(() => {
-          arr1.forEach((el) => {
-            el.isFlipped = false;
-          });
-          setArr1(arr1);
-          setOpendeCards([]);
-        }, 800);
+        close();
       }
     }
   }, [openedCards]);
 
   const handleClick = (card) => {
+    if (!cardsClosed || mached.includes(card) || openedCards.includes(card)) return;
+
     const flippedCard = arr1.find((el) => el.id === card.id);
     flippedCard.isFlipped = true;
+    flippedCard.count += 1;
+
     setArr1(arr1);
     setOpendeCards([...openedCards, card]);
   };
-
-  console.log(arr1);
 
   return (
     <div className="gamefield">
@@ -59,7 +72,6 @@ const GameField = ({ cards }) => {
           frontRotate={cardsClosed && !card.isFlipped ? 'front-rotate' : ''}
           backRotate={cardsClosed && !card.isFlipped ? 'back-rotate' : ''}
           handleClick={() => handleClick(card)}
-          isFlipped={card.isFlipped}
         />
       ))}
     </div>
