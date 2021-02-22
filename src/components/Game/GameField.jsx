@@ -5,7 +5,6 @@ import Card from './Card';
 
 const GameField = ({ cards, score, setscore }) => {
   const [cardsClosed, setCardsClosed] = useState(false);
-  // const [score, setScore] = useState(0);
   const [cardsArr, setCardsArr] = useState(cards);
   const [openedCards, setOpendeCards] = useState([]);
   const [mached, setMached] = useState([]);
@@ -52,7 +51,7 @@ const GameField = ({ cards, score, setscore }) => {
   };
 
   return (
-    <div className="gamefield">
+    <div className="gamefield" width="900px" height="900px">
       {cardsArr.map((card) => (
         <Card
           key={card.id}

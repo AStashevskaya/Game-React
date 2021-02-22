@@ -1,7 +1,7 @@
 .card {
     overflow: hidden;
     position: relative;
-    @include equalSides(270px);
+    // @include equalSides(270px);
     margin: 30px 10px;
     border-radius: 10px;
     cursor: pointer;
