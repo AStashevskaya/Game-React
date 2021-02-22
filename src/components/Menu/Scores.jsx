@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { menuLink } from '../../data/navBarData';
 import MenuButton from './MenuButton';
 
-const ScoresPage = ({ getClick }) => {
+const ScoresPage = () => {
   const { path, title } = menuLink;
 
   return (
@@ -12,21 +11,11 @@ const ScoresPage = ({ getClick }) => {
       <h1> scores </h1>
 
       <MenuButton
-        getClick={getClick}
         text={title}
         path={path}
       />
     </div>
   );
-};
-
-ScoresPage.defaultProps = {
-
-  getClick: () => {},
-};
-
-ScoresPage.propTypes = {
-  getClick: PropTypes.func,
 };
 
 export default ScoresPage;

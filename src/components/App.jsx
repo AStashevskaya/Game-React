@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, {
   Fragment, useState, useEffect,
 } from 'react';
@@ -14,49 +15,65 @@ import Game from './Game/Game';
 
 const App = () => {
   const [isClicked, setIsClicked] = useState(false);
+  const [cardClicked, setCardClicked] = useState(false);
 
   useEffect(() => {
-    console.log(isClicked, 'from use');
-    setIsClicked(false);
-  }, [isClicked]);
+    window.addEventListener('click', ({ target }) => {
+      console.log(cardClicked, isClicked);
+      if (target.id === 'root') {
+        setIsClicked(false);
+      }
 
-  const getClick = () => {
-    console.log(isClicked, 'from method');
-    setIsClicked(true);
-  };
+      if (target.id === 'card') {
+        setCardClicked(true);
+      }
+
+      if (target.id !== 'card') {
+        setIsClicked(true);
+      }
+    });
+    setTimeout(() => {
+      setCardClicked(false);
+      setIsClicked(false);
+    }, 0);
+
+    return window.addEventListener('click', ({ target }) => {
+      if (target.id === 'root') return;
+
+      if (target.id === 'card') {
+        setCardClicked(true);
+      }
+
+      if (target.id !== 'card') {
+        setIsClicked(true);
+      }
+      setIsClicked(true);
+    });
+  }, [isClicked, cardClicked]);
 
   return (
     <Provider store={store}>
       <>
         <AudioComponent
           isClicked={isClicked}
+          cardClicked={cardClicked}
         />
         <Router>
           <Switch>
             <Route exact path="/">
-              <NavBar
-                getClick={getClick}
-              />
+              <NavBar />
             </Route>
             <Route path="/game">
-              <Game
-                getClick={getClick}
-              />
+              <Game />
             </Route>
             <Route path="/options">
-              <Options
-                getClick={getClick}
-              />
+              <Options />
             </Route>
             <Route path="/about">
-              <About
-                getClick={getClick}
-              />
+              <About />
             </Route>
             <Route path="/scores">
-              <Scores
-                getClick={getClick}
-              />
+              <Scores />
             </Route>
           </Switch>
 

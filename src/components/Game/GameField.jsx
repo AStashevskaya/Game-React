@@ -68,7 +68,7 @@ const GameField = ({ cards }) => {
       {arr1.map((card) => (
         <Card
           key={card.id}
-          title={card.title}
+          title={card.russian}
           frontRotate={cardsClosed && !card.isFlipped ? 'front-rotate' : ''}
           backRotate={cardsClosed && !card.isFlipped ? 'back-rotate' : ''}
           handleClick={() => handleClick(card)}

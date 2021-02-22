@@ -1,0 +1,67 @@
+const fruits = [
+  {
+    isFlipped: false,
+    clickedTimes: 0,
+    russian: 'яблоко',
+    english: 'apple',
+    image: 'apple.jpg',
+  },
+  {
+    isFlipped: false,
+    clickedTimes: 0,
+    russian: 'банан',
+    english: 'banana',
+    image: 'banana.jpg',
+    sound: 'banana.mp3',
+  },
+  {
+    isFlipped: false,
+    clickedTimes: 0,
+    russian: 'инжир',
+    english: 'fig',
+    image: 'fig.jpg',
+    sound: 'fig.mp3',
+  },
+  {
+    isFlipped: false,
+    clickedTimes: 0,
+    russian: 'манго',
+    english: 'mango',
+    image: 'mango.jpg',
+    sound: 'mango.mp3',
+  },
+  {
+    isFlipped: false,
+    clickedTimes: 0,
+    russian: 'дыня',
+    english: 'melon',
+    image: 'melon.jpg',
+    sound: 'melon.mp3',
+  },
+  {
+    isFlipped: false,
+    clickedTimes: 0,
+    russian: 'груша',
+    english: 'pear',
+    image: 'pear.jpg',
+    sound: 'pear.mp3',
+  },
+  {
+    isFlipped: false,
+    clickedTimes: 0,
+    russian: 'ананас',
+    english: 'pineapple',
+    image: 'pineapple.jpg',
+    sound: 'pineapple.mp3',
+  },
+  {
+    isFlipped: false,
+    clickedTimes: 0,
+    russian: 'слива',
+    english: 'plum',
+    image: 'plum.jpg',
+    sound: 'plum.mp3',
+  },
+];
+
+export default fruits;

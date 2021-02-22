@@ -7,21 +7,31 @@ import PropTypes from 'prop-types';
 
 import soundButton from '../../assets/sounds/button.mp3';
 import menuMusic from '../../assets/sounds/menu.mp3';
+import gameMusic from '../../assets/sounds/playing.mp3';
+import swapSound from '../../assets/sounds/swap.mp3';
 
-const AudioComponent = ({ isClicked }) => {
+const AudioComponent = ({ isClicked, cardClicked }) => {
   const musicRef = useRef();
   const audioRef = useRef();
+  const swapRef = useRef();
+  const location = window.location.pathname;
 
-  const isMusicOn = useSelector((state) => state.musicOn);
-  const isSoundOn = useSelector((state) => state.soundOn);
+  const isMusicOn = useSelector((state) => state.music.musicOn);
+  const isSoundOn = useSelector((state) => state.music.soundOn);
 
   const [currentClickSound, setCurrentClickSound] = useState('');
-  //   const [currentMusic, setCurrentMusic] = useState('');
+  const [currentMusic, setCurrentMusic] = useState(menuMusic);
   const audio = audioRef.current;
+  const swap = swapRef.current;
   const music = musicRef.current;
 
   const setMusic = () => {
     if (!music) return;
+    if (location === '/game') {
+      setCurrentMusic(gameMusic);
+    } else {
+      setCurrentMusic(menuMusic);
+    }
 
     if (isMusicOn) {
       music.play();
@@ -36,61 +46,44 @@ const AudioComponent = ({ isClicked }) => {
       setCurrentClickSound(soundButton);
     }
 
-    if (isClicked && isSoundOn) audio.play();
+    if (isClicked && isSoundOn) {
+      audio.currentTime = 0;
+      audio.play();
+    }
+    if (cardClicked && isSoundOn) {
+      swap.currentTime = 0;
+      swap.play();
+    }
 
     setMusic();
-  }, [isMusicOn, isSoundOn, currentClickSound, isClicked]);
-
-  // const setMusic = () => {
-  //   if (!music) return;
-  //   if (MusicOn) {
-  //     music.play();
-  //     music.loop = true;
-  //   }
-
-  //   if (!MusicOn) music.pause();
-  // };
-
-  // useEffect(() => {
-  //   if (currentClickSound !== soundButton) {
-  //     setCurrentClickSound(soundButton);
-  //   }
-
-  //   if (isClicked && SoundOn) audio.play();
-
-  //   setMusic();
-  // }, [MusicOn, SoundOn, currentClickSound, isClicked]);
+  }, [isMusicOn, isSoundOn, currentClickSound, isClicked, cardClicked]);
 
   return (
     <>
       <audio
-        src={menuMusic}
+        src={currentMusic}
         ref={musicRef}
       />
       <audio
         src={currentClickSound}
         ref={audioRef}
       />
+      <audio
+        src={swapSound}
+        ref={swapRef}
+      />
     </>
   );
 };
 
 AudioComponent.defaultProps = {
-  // MusicOn: false,
-  // SoundOn: false,
   isClicked: false,
-  // toggleMusic: () => {},
-  // toggleSound: () => {},
-  // getClick: () => {},
+  cardClicked: false,
 };
 
 AudioComponent.propTypes = {
-  // MusicOn: PropTypes.bool,
-  // SoundOn: PropTypes.bool,
   isClicked: PropTypes.bool,
-  // toggleMusic: PropTypes.func,
-  // toggleSound: PropTypes.func,
-  // getClick: PropTypes.func,
+  cardClicked: PropTypes.bool,
 };
 
 export default AudioComponent;

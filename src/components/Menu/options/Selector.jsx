@@ -1,10 +1,14 @@
 import React from 'react';
+// import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+
+import sizeChange from '../../../redux/field/fieldActions';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -18,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Selector = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const handleChange = ({ target: value }) => {
+    dispatch(sizeChange(value.value));
+  };
 
   return (
     <FormControl variant="filled" className={classes.formControl}>
@@ -25,16 +33,25 @@ const Selector = () => {
       <Select
         labelId="demo-simple-select-filled-label"
         id="demo-simple-select-filled"
-                // value={age}
-                // onChange={handleChange}
-        label="Age"
+        // value={fieldsize}
+        onChange={handleChange}
       >
-        <MenuItem value={10}>10</MenuItem>
         <MenuItem value={16}>16</MenuItem>
-        <MenuItem value={24}>24</MenuItem>
+        <MenuItem value={20}>20</MenuItem>
+        <MenuItem value={30}>30</MenuItem>
       </Select>
     </FormControl>
   );
 };
+
+// Selector.defaultProps = {
+//   // handleChange: () => {},
+//   fieldsize: 12,
+// };
+
+// Selector.propTypes = {
+//   // handleChange: PropTypes.func,
+//   fieldsize: PropTypes.number,
+// };
 
 export default Selector;
