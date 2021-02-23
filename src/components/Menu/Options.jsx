@@ -18,6 +18,8 @@ const OptionsPage = () => {
 
   const isMusicOn = useSelector((state) => state.music.musicOn);
   const isSoundOn = useSelector((state) => state.music.soundOn);
+  // const isMusicOn = useSelector((state) => state.musicOn);
+  // const isSoundOn = useSelector((state) => state.soundOn);
   const dispatch = useDispatch();
 
   const switchSound = (e) => {
