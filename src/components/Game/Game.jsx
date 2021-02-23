@@ -1,5 +1,8 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
+
+import { useSelector } from 'react-redux';
 
 import { menuLink } from '../../data/navBarData';
 import MenuButton from '../Menu/MenuButton';
@@ -9,12 +12,13 @@ import englishCards from '../../data/englishCards';
 import GameField from './GameField';
 import Score from './Score';
 
-const GamePage = ({ getClick }) => {
+const GamePage = () => {
   const { path, title } = menuLink;
   const [score, setScore] = useState(0);
+  const fieldSize = useSelector((state) => state.field.size);
   // const [randomCards, setRandomCards] = useState([]);
   const generateCards = () => {
-    const randomArr = getRandomArray(6, englishCards);
+    const randomArr = getRandomArray(fieldSize, englishCards);
     let cards = [...randomArr, ...randomArr];
     cards = cards.map((el, idx) => {
       const newEl = { ...el, id: idx + 1 };
@@ -36,7 +40,6 @@ const GamePage = ({ getClick }) => {
       <Score score={score} />
       <GameField cards={cards} score={score} setscore={setScore} />
       <MenuButton
-        getClick={getClick}
         text={title}
         path={path}
       />
@@ -44,13 +47,15 @@ const GamePage = ({ getClick }) => {
   );
 };
 
-GamePage.defaultProps = {
+// GamePage.defaultProps = {
 
-  getClick: () => {},
-};
+//   getClick: () => {},
+//   // fieldSize: 12,
+// };
 
-GamePage.propTypes = {
-  getClick: PropTypes.func,
-};
+// GamePage.propTypes = {
+//   getClick: PropTypes.func,
+//   // fieldSize: PropTypes.number,
+// };
 
 export default GamePage;

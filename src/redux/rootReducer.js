@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
 import musicReducer from './music/reducerMusic';
-// import soundReducer from './sound/soundReducer';
+import fieldReducer from './field/fieldReducer';
 
 const rootReducer = combineReducers({
   music: musicReducer,
-  // sound: soundReducer,
+  field: fieldReducer,
 });
 
 export default rootReducer;
