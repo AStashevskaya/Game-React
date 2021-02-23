@@ -7,7 +7,7 @@
 import animals from './animals';
 import fruits from './fruits';
 
-const englishCards = [...animals, fruits];
+const englishCards = [...animals, ...fruits];
 // const englishCards = [
 //   {
 //     id: 1,
@@ -107,5 +107,5 @@ const englishCards = [...animals, fruits];
 //     title: 'fish',
 //   },
 // ];
-
+console.log(englishCards);
 export default englishCards;

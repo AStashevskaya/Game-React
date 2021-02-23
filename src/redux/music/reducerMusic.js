@@ -1,11 +1,12 @@
+/* eslint-disable no-console */
 import { TOGGLE_MUSIC, TOGGLE_SOUND } from '../constants';
 
-const initialState = {
+const musicState = {
   musicOn: false,
   soundOn: true,
 };
 
-const musicReducer = (state = initialState, action) => {
+const musicReducer = (state = musicState, action) => {
   switch (action.type) {
     case TOGGLE_MUSIC:
       return {
@@ -21,4 +22,7 @@ const musicReducer = (state = initialState, action) => {
   }
 };
 
-export default musicReducer;
+console.log(musicReducer);
+
+// export default musicReducer;
+export default musicState;

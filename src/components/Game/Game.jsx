@@ -18,7 +18,16 @@ const GamePage = () => {
   const fieldSize = useSelector((state) => state.field.size);
   // const [randomCards, setRandomCards] = useState([]);
   const generateCards = () => {
-    const randomArr = getRandomArray(fieldSize, englishCards);
+    // eslint-disable-next-line no-debugger
+    debugger;
+    let randomArr = getRandomArray(fieldSize, englishCards);
+    randomArr = randomArr.map((el, idx) => {
+      const item = { ...el, index: idx + 1 };
+      console.log(item);
+      return item;
+    });
+    console.log(randomArr);
+
     let cards = [...randomArr, ...randomArr];
     cards = cards.map((el, idx) => {
       const newEl = { ...el, id: idx + 1 };
@@ -46,16 +55,5 @@ const GamePage = () => {
     </div>
   );
 };
-
-// GamePage.defaultProps = {
-
-//   getClick: () => {},
-//   // fieldSize: 12,
-// };
-
-// GamePage.propTypes = {
-//   getClick: PropTypes.func,
-//   // fieldSize: PropTypes.number,
-// };
 
 export default GamePage;

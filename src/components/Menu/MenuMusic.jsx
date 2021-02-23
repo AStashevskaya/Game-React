@@ -18,6 +18,8 @@ const AudioComponent = ({ isClicked, cardClicked }) => {
 
   const isMusicOn = useSelector((state) => state.music.musicOn);
   const isSoundOn = useSelector((state) => state.music.soundOn);
+  // const isMusicOn = useSelector((state) => state.musicOn);
+  // const isSoundOn = useSelector((state) => state.soundOn);
 
   const [currentClickSound, setCurrentClickSound] = useState('');
   const [currentMusic, setCurrentMusic] = useState(menuMusic);
