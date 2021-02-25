@@ -1,66 +1,68 @@
+import tiger from '../assets/images/cards/tiger.jpg';
+import mouse from '../assets/images/cards/mouse.jpg';
+import monkey from '../assets/images/cards/monkey.jpg';
+import bear from '../assets/images/cards/bear.jpg';
+import elephant from '../assets/images/cards/elephant.jpg';
+import fox from '../assets/images/cards/fox.jpg';
+import giraffe from '../assets/images/cards/giraffe.jpg';
+import pig from '../assets/images/cards/pig.jpg';
+
 const animals = [
   {
     isFlipped: false,
     clickedTimes: 0,
     russian: 'тигр',
     english: 'tiger',
-    image: 'tiger.jpg',
+    image: tiger,
   },
   {
     isFlipped: false,
     clickedTimes: 0,
     russian: 'мышка',
     english: 'mouse',
-    image: 'mouse.jpg',
-    sound: 'mouse.mp3',
+    image: mouse,
   },
   {
     isFlipped: false,
     clickedTimes: 0,
     russian: 'обезьянка',
     english: 'monkey',
-    image: 'monkey.jpg',
-    sound: 'monkey.mp3',
+    image: monkey,
   },
   {
     isFlipped: false,
     clickedTimes: 0,
     russian: 'жираф',
     english: 'giraffe',
-    image: 'giraffe.jpg',
-    sound: 'giraffe.mp3',
+    image: giraffe,
   },
   {
     isFlipped: false,
     clickedTimes: 0,
     russian: 'лиса',
     english: 'fox',
-    image: 'fox.jpg',
-    sound: 'fox.mp3',
+    image: fox,
   },
   {
     isFlipped: false,
     clickedTimes: 0,
     russian: 'слон',
     english: 'elephant',
-    image: 'elephant.jpg',
-    sound: 'elephant.mp3',
+    image: elephant,
   },
   {
     isFlipped: false,
     clickedTimes: 0,
     russian: 'медведь',
     english: 'bear',
-    image: 'bear.jpg',
-    sound: 'bear.mp3',
+    image: bear,
   },
   {
     isFlipped: false,
     clickedTimes: 0,
     russian: 'свинка',
     english: 'pig',
-    image: 'pig.jpg',
-    sound: 'pig.mp3',
+    image: pig,
   },
 ];
 

@@ -3,6 +3,8 @@
 @import '_options';
 @import '_card';
 @import '_containers';
+@import '_game';
+@import '_popup.scss';
 
 html, body {
 width: 100%;
@@ -25,9 +27,16 @@ border: 0;
 //     background-color: #61dafb;;
 // }
 
-ul {
+ul, li {
     margin: 0;
     list-style: none;
+}
+
+li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 a {

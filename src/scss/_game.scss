@@ -1,0 +1,13 @@
+.score {
+  text-transform: uppercase;
+  font-size: 20px;
+  border-radius: 3px;
+  box-shadow: 0 3px 5px 2px rgba(255, 105, 135, .3);
+  color: $balck;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 140px;
+  margin: 10px;
+}

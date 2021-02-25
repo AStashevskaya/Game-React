@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import musicState from './music/reducerMusic';
 import fieldState from './field/fieldReducer';
 import { TOGGLE_MUSIC, TOGGLE_SOUND, CHANGE_SIZE } from './constants';
+import gameReducer from './game/gameReducer';
 // import musicReducer from './music/reducerMusic';
 // import fieldReducer from './field/fieldReducer';
 
@@ -35,6 +36,7 @@ const fieldReducer = (state = fieldState, action) => {
 const rootReducer = combineReducers({
   music: musicReducer,
   field: fieldReducer,
+  game: gameReducer,
 });
 
 export default rootReducer;

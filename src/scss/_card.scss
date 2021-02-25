@@ -78,6 +78,11 @@
       transition: all .4s ease-in;
       background: rgb(240,155,121);
       background: linear-gradient(180deg, rgba(240,155,121,1) 23%, rgba(240,155,121,1) 41%, rgba(255,255,255,1) 100%);
+
+      img {
+        @include equalSides(100%);
+        object-fit: cover;
+      }
     }
 
     &__back {

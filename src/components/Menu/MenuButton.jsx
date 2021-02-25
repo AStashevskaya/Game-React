@@ -3,23 +3,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import useSound from 'use-sound';
+import { useSelector } from 'react-redux';
 
 import MyButton from './options/MyButton';
+import soundButton from '../../assets/sounds/button.mp3';
 
-const MenuButton = ({ path, text }) => (
-  <li>
-    <Link to={path}>
-      <MyButton>
-        {text}
-      </MyButton>
-    </Link>
-    {/* <a href={path}>
-      {text}
-    </a> */}
+const MenuButton = ({ path, text }) => {
+  const [play] = useSound(soundButton);
+  const isSoundOn = useSelector((state) => state.music.soundOn);
 
-  </li>
-);
+  const handleClick = () => {
+    if (isSoundOn) {
+      play();
+    }
+  };
 
+  return (
+    <li onMouseDown={handleClick}>
+      <Link to={path}>
+        <MyButton>
+          {text}
+        </MyButton>
+      </Link>
+    </li>
+  );
+};
 MenuButton.defaultProps = {
   path: '',
   text: '',

@@ -13,6 +13,7 @@ const MyButton = styled(Button)({
   alignItems: 'center',
   minWidth: 140,
   margin: '10px',
+  cursor: 'pointer',
 });
 
 export default MyButton;

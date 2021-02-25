@@ -70,7 +70,10 @@
         // max-width: $maxWidth;
         height: 560px;
         max-width: 560px;
-        background-color: $champainePink;
+        // background-color: $champainePink;
+        background-color: rgba($color: $champainePink, $alpha: .7);
+        border-radius: 10px;
+        box-shadow:0 3px 5px 2px rgba(13, 13, 13, 0.1);
         margin: 0 auto;
         display: flex;
         justify-content: space-evenly;

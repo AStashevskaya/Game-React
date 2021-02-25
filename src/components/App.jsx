@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, {
-  Fragment, useState, useEffect,
+  useEffect, useState,
 } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -12,59 +12,49 @@ import Options from './Menu/Options';
 import About from './Menu/About';
 import Scores from './Menu/Scores';
 import Game from './Game/Game';
+// import Popup from './Popup/Popup';
 
 const App = () => {
-  const [isClicked, setIsClicked] = useState(false);
-  const [cardClicked, setCardClicked] = useState(false);
+  const [location, setLocation] = useState(window.location.pathname);
+  // const [popupOpen, setPopupOpen] = useState(false);
+
+  const updateLevel = () => {
+    // setPopupOpen(true);
+    console.log('dff');
+  };
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setPopupOpen(false);
+  //     console.log('close');
+  //   }, 3000);
+  // }, [popupOpen]);
 
   useEffect(() => {
-    window.addEventListener('click', ({ target }) => {
-      console.log(cardClicked, isClicked);
-      if (target.id === 'root') {
-        setIsClicked(false);
-      }
-
-      if (target.id === 'card') {
-        setCardClicked(true);
-      }
-
-      if (target.id !== 'card') {
-        setIsClicked(true);
+    window.addEventListener('click', () => {
+      if (location !== window.location.pathname) {
+        setLocation(window.location.pathname);
       }
     });
-    setTimeout(() => {
-      setCardClicked(false);
-      setIsClicked(false);
-    }, 0);
-
-    return window.addEventListener('click', ({ target }) => {
-      if (target.id === 'root') return;
-
-      if (target.id === 'card') {
-        setCardClicked(true);
+    return window.addEventListener('click', () => {
+      if (location !== window.location.pathname) {
+        setLocation(window.location.pathname);
       }
-
-      if (target.id !== 'card') {
-        setIsClicked(true);
-      }
-      setIsClicked(true);
     });
-  }, [isClicked, cardClicked]);
+  }, [location]);
 
   return (
     <Provider store={store}>
       <>
-        <AudioComponent
-          isClicked={isClicked}
-          cardClicked={cardClicked}
-        />
+        <AudioComponent location={location} />
+        {/* <Popup trigger={popupOpen} /> */}
         <Router>
           <Switch>
             <Route exact path="/">
               <NavBar />
             </Route>
             <Route path="/game">
-              <Game />
+              <Game update={updateLevel} />
             </Route>
             <Route path="/options">
               <Options />
