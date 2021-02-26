@@ -1,15 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import MenuButton from './MenuButton';
 
 import { navbarLinks as linksData } from '../../data/navBarData';
 
-const NavBar = ({ getClick }) => (
+const NavBar = () => (
   <nav>
     <ul>
       {linksData.map((el) => (
         <MenuButton
-          getClick={getClick}
           text={el.title}
           path={el.path}
           key={el.id.toString()}
@@ -19,11 +18,11 @@ const NavBar = ({ getClick }) => (
   </nav>
 );
 
-NavBar.defaultProps = {
-  getClick: () => {},
-};
+// NavBar.defaultProps = {
+//   getClick: () => {},
+// };
 
-NavBar.propTypes = {
-  getClick: PropTypes.func,
-};
+// NavBar.propTypes = {
+//   getClick: PropTypes.func,
+// };
 export default NavBar;

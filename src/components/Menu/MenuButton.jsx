@@ -1,6 +1,5 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import useSound from 'use-sound';
@@ -13,19 +12,25 @@ const MenuButton = ({ path, text }) => {
   const [play] = useSound(soundButton);
   const isSoundOn = useSelector((state) => state.music.soundOn);
 
-  const handleClick = () => {
-    if (isSoundOn) {
-      play();
-    }
-  };
+  // const handleClick = (e) => {
+  //   if (isSoundOn) {
+  //     play();
+  //   }
+  //   console.log(e);
+  // };
+  const handleClick = useCallback(() => {
+    if (isSoundOn) play();
+  });
 
   return (
     <li onMouseDown={handleClick}>
+
       <Link to={path}>
         <MyButton>
           {text}
         </MyButton>
       </Link>
+
     </li>
   );
 };

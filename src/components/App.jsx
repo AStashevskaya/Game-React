@@ -13,15 +13,29 @@ import About from './Menu/About';
 import Scores from './Menu/Scores';
 import Game from './Game/Game';
 // import Popup from './Popup/Popup';
+// import menuMusic from '../assets/sounds/menu.mp3';
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname);
-  // const [popupOpen, setPopupOpen] = useState(false);
 
-  const updateLevel = () => {
-    // setPopupOpen(true);
-    console.log('dff');
-  };
+  // const audio = new Audio(menuMusic);
+  // audio.loop = true;
+  // audio.src = menuMusic;
+  // console.log(audio);
+
+  // const updateLevel = () => {
+  //   // setPopupOpen(true);
+  //   console.log('dff');
+  // };
+
+  // const finishGame = () => {
+  //   console.log(popupOpen, gameOver);
+  //   if (popupOpen && gameOver) {
+  //     setPopupOpen(false);
+  //     setGameOver(false);
+  //     console.log(popupOpen, gameOver);
+  //   }
+  // };
 
   // useEffect(() => {
   //   setTimeout(() => {
@@ -34,6 +48,9 @@ const App = () => {
     window.addEventListener('click', () => {
       if (location !== window.location.pathname) {
         setLocation(window.location.pathname);
+        // if (location === '/game' && window.location.pathname === '/') finishGame();
+
+        console.log('prevLocation:', location, window.location.pathname);
       }
     });
     return window.addEventListener('click', () => {
@@ -54,7 +71,7 @@ const App = () => {
               <NavBar />
             </Route>
             <Route path="/game">
-              <Game update={updateLevel} />
+              <Game />
             </Route>
             <Route path="/options">
               <Options />

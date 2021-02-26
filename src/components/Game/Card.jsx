@@ -6,11 +6,12 @@ import PropTypes from 'prop-types';
 import cardBG from '../../assets/images/cardBG.jpg';
 
 const Card = ({
-  title, frontRotate, backRotate, handleClick, image,
+  title, frontRotate, backRotate, handleClick, image, level, cardID, isPlaying,
 }) => (
   <div className="card" onClick={handleClick}>
     <div className={`card__front ${frontRotate}`} id="card">
-      <img src={image} alt={title} />
+      {!isPlaying && level
+       && cardID === 1 ? <h2>{title + isPlaying}</h2> : <img src={image} alt={title} />}
 
     </div>
     <div className={`card__back ${backRotate}`}>
@@ -34,6 +35,9 @@ Card.propTypes = {
   backRotate: PropTypes.string,
   handleClick: PropTypes.func.isRequired,
   image: PropTypes.string,
+  level: PropTypes.number.isRequired,
+  cardID: PropTypes.number.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
 };
 
 export default Card;

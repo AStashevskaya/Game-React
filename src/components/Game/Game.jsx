@@ -1,95 +1,91 @@
+/* eslint-disable func-names */
 /* eslint-disable no-console */
-import React, { Fragment, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState, useCallback } from 'react';
+// import PropTypes from 'prop-types';
 
 import { useSelector } from 'react-redux';
 import useSound from 'use-sound';
 
 import winSound from '../../assets/sounds/win.mp3';
-import { menuLink } from '../../data/navBarData';
-import MenuButton from '../Menu/MenuButton';
 
 import getRandomArray from '../../utils/getRandomArray';
 import englishCards from '../../data/englishCards';
-import GameField from './GameField';
-import Score from './Score';
-import Timer from './Timer';
+import GameField from './Field';
 import Popup from '../Popup/Popup';
+import GameOptions from './OptionsGame';
 
-const GamePage = ({ update }) => {
-  const { path, title } = menuLink;
+const GamePage = (props) => {
+  console.log(props);
   const [score, setScore] = useState(0);
-  const [startTiming, setStartTiming] = useState(false);
   const [isPlaying, setIsplaying] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [gameOver, setGameOver] = useState(false);
-
-  const [popupOpen, setPopupOpen] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [level, setLevel] = useState(0);
 
   const fieldSize = useSelector((state) => state.field.size);
-  const level = useSelector((state) => state.game.level);
+  // const level = useSelector((state) => state.game.level);
   const isSoundOn = useSelector((state) => state.music.soundOn);
   const [play] = useSound(winSound);
 
-  const generateCards = () => {
+  console.log(level);
+
+  const generateCards = useCallback(() => {
     let randomArr = getRandomArray(fieldSize, englishCards);
     randomArr = randomArr.map((el, idx) => {
-      const item = { ...el, index: idx + 1 };
+      const item = { ...el, index: idx + 1, card: 1 };
       return item;
     });
 
     let cardS = [...randomArr, ...randomArr];
+    const { length } = cardS;
     cardS = cardS.map((el, idx) => {
-      const newEl = { ...el, id: idx + 1 };
+      const newEl = { ...el, id: idx + 1, card: idx >= length / 2 ? 2 : 1 };
       return newEl;
     });
     return cardS;
-  };
+  });
+
   const [cards, setCards] = useState(generateCards());
 
+  const updateField = () => {
+    // if (level > 1) setStartTiming(true);
+    setTimeout(() => {
+      console.log('update method');
+      setCards(generateCards());
+    }, 3000);
+  };
+
   useEffect(() => {
-    console.log('isPlaying', isPlaying);
-    if (level !== 0) {
-      update();
+    if (isFinished) {
       setPopupOpen(true);
-
       if (isSoundOn) play();
-
-      setTimeout(() => {
-        setStartTiming(true);
-        setCards(generateCards());
-      }, 3000);
     }
-  }, [level]);
+  }, [isFinished]);
 
   useEffect(() => {
-    if (!gameOver) {
+    if (popupOpen) {
       setTimeout(() => {
         setPopupOpen(false);
-        console.log('close');
+        console.log('useEffect', popupOpen, 'is open');
+        setLevel(level + 1);
+        // setIsFinished(false);
+        updateField();
       }, 3000);
     }
   }, [popupOpen]);
 
-  const [count, setCount] = useState(60);
-
   useEffect(() => {
-    let timer;
-    if (level > 0) {
-      if (count > 0) {
-        timer = setInterval(() => {
-          setCount(count - 1);
-        }, 1000);
-      } else {
-        setGameOver(true);
-        setPopupOpen(true);
-      }
+    if (!gameOver && level !== 0) {
+      setTimeout(() => {
+        setPopupOpen(false);
+        console.log('useEffect', popupOpen);
+        updateField();
+      }, 3000);
     }
-
-    return function () {
-      clearInterval(timer);
-    };
-  }, [startTiming, count]);
+  }, [popupOpen]);
 
   return (
     <div className="game">
@@ -98,33 +94,30 @@ const GamePage = ({ update }) => {
         gameOver={gameOver}
       />
       <GameField
+        level={level}
         cards={cards}
         score={score}
         setscore={setScore}
         isPlaying={isPlaying}
         setIsplaying={setIsplaying}
+        isFinished={isFinished}
+        setIsFinished={setIsFinished}
       />
-      <div className="game__settings">
-        <>
-          <Score score={score} />
-          <Timer
-            isTiming={startTiming}
-            level={level}
-            count={count}
-          />
-          <MenuButton
-            text={title}
-            path={path}
-          />
-        </>
-      </div>
+      <GameOptions
+        score={score}
+        level={level}
+      />
 
     </div>
   );
 };
 
-GamePage.propTypes = {
-  update: PropTypes.func.isRequired,
-};
+// GamePage.propTypes = {
+//   update: PropTypes.func.isRequired,
+//   gameOver: PropTypes.bool.isRequired,
+//   setGameOver: PropTypes.func.isRequired,
+//   popupOpen: PropTypes.bool.isRequired,
+//   setPopupOpen: PropTypes.func.isRequired,
+// };
 
 export default GamePage;
