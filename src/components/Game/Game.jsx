@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import useSound from 'use-sound';
 
 import winSound from '../../assets/sounds/win.mp3';
+// import failSound from '../../assets/sounds/game-over.mp3'
 
 import getRandomArray from '../../utils/getRandomArray';
 import englishCards from '../../data/englishCards';
@@ -19,10 +20,10 @@ const GamePage = (props) => {
   const [score, setScore] = useState(0);
   const [isPlaying, setIsplaying] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
+  const [isWin, setIsWin] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
-  // eslint-disable-next-line no-unused-vars
+  const [count, setCount] = useState(63);
   const [gameOver, setGameOver] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [level, setLevel] = useState(0);
 
   const fieldSize = useSelector((state) => state.field.size);
@@ -31,6 +32,13 @@ const GamePage = (props) => {
   const [play] = useSound(winSound);
 
   console.log(level);
+
+  const finishGame = () => {
+    console.log('is finishing really');
+    setIsplaying(false);
+    setIsFinished(false);
+    setPopupOpen(false);
+  };
 
   const generateCards = useCallback(() => {
     let randomArr = getRandomArray(fieldSize, englishCards);
@@ -51,11 +59,10 @@ const GamePage = (props) => {
   const [cards, setCards] = useState(generateCards());
 
   const updateField = () => {
-    // if (level > 1) setStartTiming(true);
     setTimeout(() => {
       console.log('update method');
       setCards(generateCards());
-    }, 3000);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -63,29 +70,70 @@ const GamePage = (props) => {
       setPopupOpen(true);
       if (isSoundOn) play();
     }
+
+    // if (isFinished && level === 2) {
+
+    // }
   }, [isFinished]);
 
   useEffect(() => {
-    if (popupOpen) {
+    let timer;
+    if (isWin) {
+      if (count > 0) {
+        timer = setInterval(() => {
+          setScore(score + 1);
+        }, 100);
+      }
+    }
+    return function () {
+      clearInterval(timer);
+    };
+  }, [isWin, score]);
+
+  useEffect(() => {
+    if (popupOpen && level !== 2) {
       setTimeout(() => {
         setPopupOpen(false);
-        console.log('useEffect', popupOpen, 'is open');
         setLevel(level + 1);
+        console.log('useEffect', popupOpen, 'level');
         // setIsFinished(false);
         updateField();
       }, 3000);
     }
-  }, [popupOpen]);
 
-  useEffect(() => {
-    if (!gameOver && level !== 0) {
+    if (popupOpen && level === 2) {
+      const n = count * 150;
+      setIsWin(true);
+      console.log('useEffect', popupOpen, 'is open level 2', n);
       setTimeout(() => {
         setPopupOpen(false);
-        console.log('useEffect', popupOpen);
-        updateField();
-      }, 3000);
+      }, n);
     }
   }, [popupOpen]);
+
+  // useEffect(() => {
+  //   console.log('gameOver:', gameOver);
+  //   if (!gameOver && level !== 0) {
+  //     setTimeout(() => {
+  //       setPopupOpen(false);
+  //       console.log('useEffect', popupOpen);
+  //       updateField();
+  //     }, 3000);
+  //   }
+  // }, [popupOpen]);
+
+  useEffect(() => {
+    if (count <= 0) {
+      setGameOver(true);
+    }
+  }, [count]);
+
+  useEffect(() => {
+    if (gameOver) {
+      finishGame();
+      document.location.replace('/game-over');
+    }
+  }, [gameOver]);
 
   return (
     <div className="game">
@@ -106,6 +154,9 @@ const GamePage = (props) => {
       <GameOptions
         score={score}
         level={level}
+        count={count}
+        setCount={setCount}
+        isWin={isWin}
       />
 
     </div>

@@ -12,6 +12,7 @@ import Options from './Menu/Options';
 import About from './Menu/About';
 import Scores from './Menu/Scores';
 import Game from './Game/Game';
+import GameOver from './GameOver/GameOver';
 // import Popup from './Popup/Popup';
 // import menuMusic from '../assets/sounds/menu.mp3';
 
@@ -81,6 +82,9 @@ const App = () => {
             </Route>
             <Route path="/scores">
               <Scores />
+            </Route>
+            <Route path="/game-over">
+              <GameOver />
             </Route>
           </Switch>
 

@@ -7,31 +7,40 @@ import MenuButton from '../Menu/MenuButton';
 import Score from './Score';
 import Timer from './Timer';
 
-const GameOptions = ({ score, level }) => {
+const GameOptions = ({
+  score, level, count, setCount, isWin,
+}) => {
   const { path, title } = menuLink;
-  const [count, setCount] = useState(20);
+  // const [count, setCount] = useState(23);
   const [startTiming, setStartTiming] = useState(false);
 
   useEffect(() => {
     let timer;
-    if (level === 2) {
-      console.log(level);
-      setStartTiming(true);
+    if (level === 2 && !isWin) {
+      setTimeout(() => {
+        setStartTiming(true);
+      }, 4000);
+
       if (count > 0) {
         timer = setInterval(() => {
           setCount(count - 1);
         }, 1000);
-      } else {
-        // setGameOver(true);
-        // setPopupOpen(true);
-        // console.log(popupOpen, gameOver);
+      }
+    }
+
+    if (level === 2 && isWin) {
+      if (count > 0) {
+        console.log(count, 'from win');
+        timer = setInterval(() => {
+          setCount(count - 1);
+        }, 100);
       }
     }
 
     return function () {
       clearInterval(timer);
     };
-  }, [startTiming, count]);
+  }, [count, level]);
 
   return (
     <div className="game__settings">
@@ -54,11 +63,15 @@ const GameOptions = ({ score, level }) => {
 GameOptions.defaultProps = {
   score: 0,
   level: 0,
+  count: 23,
 };
 
 GameOptions.propTypes = {
   score: PropTypes.number,
   level: PropTypes.number,
+  count: PropTypes.number,
+  setCount: PropTypes.func.isRequired,
+  isWin: PropTypes.bool.isRequired,
 };
 
 export default GameOptions;

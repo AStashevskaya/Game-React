@@ -24,7 +24,6 @@ const GameField = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('from gamefield', isPlaying, cards, level);
     setIsFinished(false);
     if (isSoundOn) playSwap();
     if (!isPlaying) {
@@ -55,8 +54,7 @@ const GameField = ({
         cardsArr.forEach((el) => {
           el.isFlipped = false;
         });
-        console.log('current cards should be closed');
-      }, 400);
+      }, 0);
       setIsplaying(false);
       setCardsArr(cardsArr);
       setMached([]);
