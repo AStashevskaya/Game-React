@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+  useState, useEffect, useRef, useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import useSound from 'use-sound';
 import { useSelector, useDispatch } from 'react-redux';
@@ -15,6 +17,7 @@ const GameField = ({
   const [cardsArr, setCardsArr] = useState(cards);
   const [openedCards, setOpendeCards] = useState([]);
   const [mached, setMached] = useState([]);
+  const [width, setWidth] = useState(0);
 
   const [playSwap] = useSound(swapSound);
   const [playCorrect] = useSound(correctSound);
@@ -23,8 +26,47 @@ const GameField = ({
   // eslint-disable-next-line no-unused-vars
   const dispatch = useDispatch();
 
+  const containerRef = useRef(null);
+  const container = containerRef.current;
+  // useEffect(() => {
+  //   if (container) {
+  //     width = container.getBoundingClientRect().width;
+  //     console.log(width);
+  //   }
+  // }, [container]);
+
+  const onResize = useCallback(() => {
+    console.log(container);
+    if (container) {
+      setWidth(container.getBoundingClientRect().width);
+    }
+
+    console.log(width, container);
+  }, [container]);
+
+  useEffect(() => {
+    window.addEventListener('resize', onResize);
+
+    return () => {
+      window.removeEventListener('resize', onResize);
+    };
+  }, [onResize]);
+
+  // const container = containerRef.current;
+  // let width;
+
+  // useEffect(() => {
+  //   if (container) {
+  //     width = container.getBoundingClientRect();
+  //   }
+  //   console.log(width);
+  // }, [container]);
+
+  // console.log(container);
+
   useEffect(() => {
     setIsFinished(false);
+    console.log('isPlaying', isPlaying, 'isFinished', isFinished);
     if (isSoundOn) playSwap();
     if (!isPlaying) {
       setTimeout(() => {
@@ -34,6 +76,7 @@ const GameField = ({
   }, [isPlaying]);
 
   useEffect(() => {
+    console.log('cards', cards);
     setCardsArr([...cards]);
     setIsplaying(false);
   }, [cards]);
@@ -91,6 +134,7 @@ const GameField = ({
         }, 800);
       }
     }
+    localStorage.setItem('cards', JSON.stringify(cardsArr));
   }, [openedCards.length]);
 
   useEffect(() => {
@@ -111,7 +155,7 @@ const GameField = ({
   };
 
   return (
-    <div className="gamefield" width="900px" height="900px">
+    <div className="gamefield" ref={containerRef}>
       {cardsArr.map((card) => (
         <Card
           key={card.id}
@@ -123,6 +167,7 @@ const GameField = ({
           cardID={card.card}
           image={card.image}
           isPlaying={isFinished}
+          width={width / 4}
         />
       ))}
     </div>

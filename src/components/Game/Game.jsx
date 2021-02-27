@@ -53,15 +53,16 @@ const GamePage = (props) => {
       const newEl = { ...el, id: idx + 1, card: idx >= length / 2 ? 2 : 1 };
       return newEl;
     });
+    console.log(cardS, 'from callback');
     return cardS;
-  });
+  }, [level]);
 
-  const [cards, setCards] = useState(generateCards());
+  const [cards, setCards] = useState(generateCards);
 
   const updateField = () => {
     setTimeout(() => {
-      console.log('update method');
-      setCards(generateCards());
+      console.log('update field');
+      setCards(generateCards);
     }, 1000);
   };
 

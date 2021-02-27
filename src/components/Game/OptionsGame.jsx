@@ -4,14 +4,13 @@ import PropTypes from 'prop-types';
 
 import { menuLink } from '../../data/navBarData';
 import MenuButton from '../Menu/MenuButton';
-import Score from './Score';
+import Display from './Display';
 import Timer from './Timer';
 
 const GameOptions = ({
   score, level, count, setCount, isWin,
 }) => {
   const { path, title } = menuLink;
-  // const [count, setCount] = useState(23);
   const [startTiming, setStartTiming] = useState(false);
 
   useEffect(() => {
@@ -30,7 +29,6 @@ const GameOptions = ({
 
     if (level === 2 && isWin) {
       if (count > 0) {
-        console.log(count, 'from win');
         timer = setInterval(() => {
           setCount(count - 1);
         }, 100);
@@ -45,7 +43,9 @@ const GameOptions = ({
   return (
     <div className="game__settings">
       <>
-        <Score score={score} />
+        <Display text={`Level: ${level + 1}`} />
+        <Display text={`Score: ${score}`} />
+
         <Timer
           isTiming={startTiming}
           level={level}

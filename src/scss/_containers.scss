@@ -1,13 +1,14 @@
 #root {
-    min-height: 100vh;
+    height: 100vh;
     @include equalSides (100%);
     // background-color: #61dafb;;
     background-image: url(../assets/images/4926119.jpg);
     background-size: cover;
     position: relative;
 
-    @media (max-width: 768px) {
-        padding: 0 10px;
+    @media (max-width: 1024px) {
+        padding: 0 20px;
+        height: 100%;
         }
 
     nav {
@@ -65,22 +66,6 @@
     //     flex-wrap: wrap;
     //     margin-bottom: 50px;
     // }
-
-    .gamefield {
-        // max-width: $maxWidth;
-        height: 560px;
-        max-width: 560px;
-        // background-color: $champainePink;
-        background-color: rgba($color: $champainePink, $alpha: .7);
-        border-radius: 10px;
-        box-shadow:0 3px 5px 2px rgba(13, 13, 13, 0.1);
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-evenly;
-        flex-wrap: wrap;
-        margin-bottom: 50px;
-    }
-
 
     .answer-container {
         height: 0;

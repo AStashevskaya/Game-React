@@ -2,12 +2,15 @@
     overflow: hidden;
     position: relative;
     @include equalSides(100px);
-    margin: 10px 10px;
+    margin: 5px;
     border-radius: 10px;
     cursor: pointer;
     transform: scale(1);
     transition: all .7s ease-in;
-    box-shadow:0px 2px 9px 8px rgba(13, 13, 13, 0.1);
+
+    @media (max-width: 768px){
+      @include equalSides(80px);  
+    }
 
     &:hover {
       box-shadow: none;
@@ -36,31 +39,13 @@
       padding-top: 15px;
       transition: all .4s ease-in;
       user-select: none;
+      
 
         img {
         @include equalSides(100%);
         object-fit: contain;   
         }
     } 
-
-    // &__content {
-    //   opacity: 1;
-    //   height: fit-content;
-    //   transition: all .4s ease-in;
-    //   padding: 10px;
-    //   font-size: 30px;
-    //   display: flex;
-    //   width: 72%;
-    //   justify-content: flex-end;
-    // }
-
-    // &__front &__content {
-    //   justify-content: flex-end;
-    // }
-
-    // &__back &__content {
-    //   justify-content: center;
-    // }
 
     &__front,
     &__back {
@@ -72,6 +57,7 @@
       transition: 1s;
       backface-visibility: hidden;
       border-radius: 10px;
+      box-shadow:0px 2px 9px 8px rgba(13, 13, 13, 0.1);
     }
 
     &__front {

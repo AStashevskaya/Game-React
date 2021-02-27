@@ -36,8 +36,8 @@ const Selector = () => {
         // value={fieldsize}
         onChange={handleChange}
       >
-        <MenuItem value={16}>16</MenuItem>
-        <MenuItem value={20}>20</MenuItem>
+        <MenuItem value={18}>18</MenuItem>
+        <MenuItem value={24}>24</MenuItem>
         <MenuItem value={30}>30</MenuItem>
       </Select>
     </FormControl>
