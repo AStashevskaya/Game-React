@@ -3,14 +3,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
 // import PropTypes from 'prop-types';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import useSound from 'use-sound';
 
 import winSound from '../../assets/sounds/win.mp3';
 // import failSound from '../../assets/sounds/game-over.mp3'
 
 import getRandomArray from '../../utils/getRandomArray';
-import { setScore as saveScore } from '../../redux/game/gameAction';
+// import { setScore as saveScore } from '../../redux/game/gameAction';
 import englishCards from '../../data/englishCards';
 import GameField from './Field';
 import Popup from '../Popup/Popup';
@@ -21,6 +21,7 @@ const GamePage = (props) => {
   const [score, setScore] = useState(0);
   const [isPlaying, setIsplaying] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
+  const [isReseted, setIsReseted] = useState(false);
   const [isWin, setIsWin] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [count, setCount] = useState(63);
@@ -30,7 +31,7 @@ const GamePage = (props) => {
   const fieldSize = useSelector((state) => state.field.size);
   // const level = useSelector((state) => state.game.level);
   const isSoundOn = useSelector((state) => state.music.soundOn);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [play] = useSound(winSound);
 
   console.log(level);
@@ -38,7 +39,7 @@ const GamePage = (props) => {
   const finishGame = () => {
     console.log('is finishing really');
     // dispatch(saveScore(score));
-    localStorage.setItem('score', JSON.stringify(score));
+    localStorage.setItem('final-score', JSON.stringify(score));
     console.log(score);
     setIsplaying(false);
     setIsFinished(false);
@@ -69,6 +70,12 @@ const GamePage = (props) => {
       console.log('update field');
       setCards(generateCards);
     }, 1000);
+
+    if (isPlaying) {
+      setIsReseted(!isReseted);
+      setIsplaying(!isPlaying);
+      setScore(0);
+    }
   };
 
   useEffect(() => {
@@ -113,17 +120,6 @@ const GamePage = (props) => {
     }
   }, [popupOpen]);
 
-  // useEffect(() => {
-  //   console.log('gameOver:', gameOver);
-  //   if (!gameOver && level !== 0) {
-  //     setTimeout(() => {
-  //       setPopupOpen(false);
-  //       console.log('useEffect', popupOpen);
-  //       updateField();
-  //     }, 3000);
-  //   }
-  // }, [popupOpen]);
-
   useEffect(() => {
     if (count <= 0) {
       setGameOver(true);
@@ -133,7 +129,6 @@ const GamePage = (props) => {
   useEffect(() => {
     if (gameOver) {
       finishGame();
-      dispatch(saveScore(score));
       document.location.replace('/game-over');
     }
   }, [gameOver]);
@@ -157,6 +152,7 @@ const GamePage = (props) => {
         setIsplaying={setIsplaying}
         isFinished={isFinished}
         setIsFinished={setIsFinished}
+        isReseted={isReseted}
       />
       <GameOptions
         score={score}
@@ -165,6 +161,7 @@ const GamePage = (props) => {
         setCount={setCount}
         isWin={isWin}
         finish={finish}
+        reset={updateField}
       />
 
     </div>

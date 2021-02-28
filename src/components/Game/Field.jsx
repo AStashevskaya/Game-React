@@ -12,7 +12,7 @@ import correctSound from '../../assets/sounds/correct.mp3';
 import Card from './Card';
 
 const GameField = ({
-  cards, score, setscore, isPlaying, setIsplaying, level, isFinished, setIsFinished,
+  cards, score, setscore, isPlaying, setIsplaying, level, isFinished, setIsFinished, isReseted,
 }) => {
   const [cardsArr, setCardsArr] = useState(cards);
   const [openedCards, setOpendeCards] = useState([]);
@@ -86,23 +86,41 @@ const GameField = ({
   //   setIsplaying(false);
   // }, [level]);
 
+  const finishCurrentPart = () => {
+    setTimeout(() => {
+      cardsArr.forEach((el) => {
+        el.isFlipped = false;
+      });
+    }, 0);
+    setIsplaying(false);
+    setCardsArr(cardsArr);
+    setMached([]);
+  };
+
   const checkIfWin = () => {
     const { length } = cards;
 
     if (length === mached.length && isPlaying) {
       setIsFinished(true);
       // dispatch(setLevel());
-
-      setTimeout(() => {
-        cardsArr.forEach((el) => {
-          el.isFlipped = false;
-        });
-      }, 0);
-      setIsplaying(false);
-      setCardsArr(cardsArr);
-      setMached([]);
+      finishCurrentPart();
+    //   setTimeout(() => {
+    //     cardsArr.forEach((el) => {
+    //       el.isFlipped = false;
+    //     });
+    //   }, 0);
+    //   setIsplaying(false);
+    //   setCardsArr(cardsArr);
+    //   setMached([]);
+    // }
     }
   };
+
+  useEffect(() => {
+    if (isReseted) {
+      finishCurrentPart();
+    }
+  }, [isReseted]);
 
   useEffect(() => {
     if (openedCards.length === 2) {
@@ -193,6 +211,7 @@ GameField.propTypes = {
   isFinished: PropTypes.bool.isRequired,
   setIsFinished: PropTypes.func.isRequired,
   level: PropTypes.number.isRequired,
+  isReseted: PropTypes.bool.isRequired,
 //   correctCards: PropTypes.array,
 };
 
