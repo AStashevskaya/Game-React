@@ -1,4 +1,5 @@
 import React from 'react';
+// import { useSelector } from 'react-redux';
 // import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -18,7 +19,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GameOver = () => {
-  const score = 0;
+  // const score = useSelector((state) => state.game.score);
+  const score = localStorage.getItem('score');
+  console.log(score);
   const { path, title } = menuLink;
 
   const classes = useStyles();
@@ -31,7 +34,7 @@ const GameOver = () => {
       <h2>
         {' '}
         gameOver, your score is
-        {score}
+        {JSON.parse(score)}
       </h2>
       <FormControl variant="filled" className={classes.formControl}>
         <Input id="demo-simple-select-filled-label" value="" onChange={handleChange} />

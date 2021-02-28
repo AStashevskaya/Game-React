@@ -3,13 +3,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
 // import PropTypes from 'prop-types';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import useSound from 'use-sound';
 
 import winSound from '../../assets/sounds/win.mp3';
 // import failSound from '../../assets/sounds/game-over.mp3'
 
 import getRandomArray from '../../utils/getRandomArray';
+import { setScore as saveScore } from '../../redux/game/gameAction';
 import englishCards from '../../data/englishCards';
 import GameField from './Field';
 import Popup from '../Popup/Popup';
@@ -29,12 +30,16 @@ const GamePage = (props) => {
   const fieldSize = useSelector((state) => state.field.size);
   // const level = useSelector((state) => state.game.level);
   const isSoundOn = useSelector((state) => state.music.soundOn);
+  const dispatch = useDispatch();
   const [play] = useSound(winSound);
 
   console.log(level);
 
   const finishGame = () => {
     console.log('is finishing really');
+    // dispatch(saveScore(score));
+    localStorage.setItem('score', JSON.stringify(score));
+    console.log(score);
     setIsplaying(false);
     setIsFinished(false);
     setPopupOpen(false);
@@ -71,10 +76,6 @@ const GamePage = (props) => {
       setPopupOpen(true);
       if (isSoundOn) play();
     }
-
-    // if (isFinished && level === 2) {
-
-    // }
   }, [isFinished]);
 
   useEffect(() => {
@@ -132,9 +133,14 @@ const GamePage = (props) => {
   useEffect(() => {
     if (gameOver) {
       finishGame();
+      dispatch(saveScore(score));
       document.location.replace('/game-over');
     }
   }, [gameOver]);
+
+  const finish = () => {
+    setGameOver(true);
+  };
 
   return (
     <div className="game">
@@ -158,6 +164,7 @@ const GamePage = (props) => {
         count={count}
         setCount={setCount}
         isWin={isWin}
+        finish={finish}
       />
 
     </div>

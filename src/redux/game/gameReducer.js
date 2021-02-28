@@ -1,8 +1,9 @@
-import { SET_LEVEL, FINISH_GAME } from '../constants';
+import { SET_LEVEL, FINISH_GAME, SET_SCORE } from '../constants';
 
 const gameState = {
   level: 0,
   gameOver: false,
+  score: 0,
 };
 
 const gameReducer = (state = gameState, action) => {
@@ -17,6 +18,14 @@ const gameReducer = (state = gameState, action) => {
         ...state,
         gameOver: !state.gameOver,
       };
+
+    case SET_SCORE: {
+      console.log(action.payload);
+      return {
+        ...state,
+        score: action.payload,
+      };
+    }
     default: return state;
   }
 };

@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 
 import { menuLink } from '../../data/navBarData';
 import MenuButton from '../Menu/MenuButton';
+import SmallButton from '../Menu/options/SmallButton';
 import Display from './Display';
 import Timer from './Timer';
 
 const GameOptions = ({
-  score, level, count, setCount, isWin,
+  score, level, count, setCount, isWin, finish,
 }) => {
   const { path, title } = menuLink;
   const [startTiming, setStartTiming] = useState(false);
@@ -51,6 +52,9 @@ const GameOptions = ({
           level={level}
           count={count}
         />
+        <SmallButton text="New Game" />
+        <SmallButton text="Finish Game" handleClick={finish} />
+        <SmallButton text="Autoplaying" />
         <MenuButton
           text={title}
           path={path}
@@ -72,6 +76,7 @@ GameOptions.propTypes = {
   count: PropTypes.number,
   setCount: PropTypes.func.isRequired,
   isWin: PropTypes.bool.isRequired,
+  finish: PropTypes.func.isRequired,
 };
 
 export default GameOptions;
