@@ -8,10 +8,7 @@ import { TOGGLE_MUSIC, TOGGLE_SOUND } from '../constants';
 
 const isMusicOn = localStorage.getItem('musicOn') === null ? false : JSON.parse(localStorage.getItem('musicOn'));
 const isSoundOn = localStorage.getItem('soundOn') === null ? true : JSON.parse(localStorage.getItem('soundOn'));
-console.log('isMusic', localStorage.getItem('musicOn') === null);
-console.log('isSound', localStorage.getItem('soundOn') === null);
-console.log(isMusicOn, isSoundOn);
-console.log(localStorage.getItem('musicOn'), localStorage.getItem('soundOn'));
+
 const musicState = {
   musicOn: isMusicOn,
   soundOn: isSoundOn,

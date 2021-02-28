@@ -9,6 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
 import sizeChange from '../../../redux/field/fieldActions';
+import useLocalStorage from '../../../hooks/useLocState';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -23,9 +24,13 @@ const useStyles = makeStyles((theme) => ({
 const Selector = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [size, setSize] = useLocalStorage('size', 18);
   const handleChange = ({ target: value }) => {
+    setSize(value.value);
     dispatch(sizeChange(value.value));
   };
+
+  console.log(size);
 
   return (
     <FormControl variant="filled" className={classes.formControl}>
