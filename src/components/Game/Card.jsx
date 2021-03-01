@@ -11,7 +11,7 @@ const Card = ({
   <div className="card" onClick={handleClick} width={width}>
     <div className={`card__front ${frontRotate}`} id="card">
       {!isPlaying && level
-       && cardID === 1 ? <h2>{title + isPlaying}</h2> : <img src={image} alt={title} />}
+       && cardID === 1 ? <div className="card__text">{title}</div> : <img src={image} alt={title} />}
 
     </div>
     <div className={`card__back ${backRotate}`}>

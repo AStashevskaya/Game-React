@@ -19,10 +19,9 @@ const OptionsPage = () => {
   const [isMusicOn, setisMusicOn] = useLocalStorage('musicOn', false);
   const [isSoundOn, setisSoundOn] = useLocalStorage('soundOn', true);
 
-  // const isMusicOn = useSelector((state) => state.music.musicOn);
-  // const isSoundOn = useSelector((state) => state.music.soundOn);
-  // const isMusicOn = useSelector((state) => state.musicOn);
-  // const isSoundOn = useSelector((state) => state.soundOn);
+  const isFs = document.fullscreenElement;
+  console.log(isFs);
+
   const dispatch = useDispatch();
 
   const switchSound = (e) => {
@@ -37,20 +36,26 @@ const OptionsPage = () => {
     dispatch(toggleMusic());
   };
 
+  // const switchFS = (e) => {
+  //   e.preventDefault();
+  //   console.log(isFs);
+  // };
+
   return (
     <div className="options">
-      {/* <div className="options__button"> */}
+
       <MyButton color="primary" type="submit" onClick={switchSound}>
         {isSoundOn ? 'Sound on' : 'Sound off'}
       </MyButton>
 
-      {/* </div> */}
-      {/* <div className="options__button"> */}
       <MyButton color="primary" type="submit" onClick={switchMusic}>
         {isMusicOn ? 'Music on' : 'Music off'}
       </MyButton>
-      {/*
-      </div> */}
+
+      {/* <MyButton color="primary" type="submit" onClick={switchFS}>
+        {isMusicOn ? 'Music on' : 'Music off'}
+      </MyButton> */}
+
       <Selector />
       <MenuButton
         text={title}

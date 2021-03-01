@@ -27,29 +27,9 @@ const GameField = ({
   // eslint-disable-next-line no-unused-vars
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   window.addEventListener('resize', onResize);
-
-  //   return () => {
-  //     window.removeEventListener('resize', onResize);
-  //   };
-  // }, [onResize]);
-
-  // const container = containerRef.current;
-  // let width;
-
-  // useEffect(() => {
-  //   if (container) {
-  //     width = container.getBoundingClientRect();
-  //   }
-  //   console.log(width);
-  // }, [container]);
-
-  // console.log(container);
-
   useEffect(() => {
     setIsFinished(false);
-    console.log('isPlaying', isPlaying, 'isFinished', isFinished);
+
     if (isSoundOn) playSwap();
     if (!isPlaying) {
       setTimeout(() => {
@@ -168,6 +148,7 @@ const GameField = ({
       if (autoArr.length % 2) {
         setTimeout(() => {
           if (isSoundOn) playSwap();
+          setscore(score + 5);
         }, 1000);
         setTimeout(() => {
           const second = cardsArr.find((el) => currentCard.id !== el.id
@@ -181,10 +162,16 @@ const GameField = ({
 
           setTimeout(() => {
             if (isSoundOn) playSwap();
+            setscore(score + 5);
             setAutoArr([...autoArr, randomCard]);
           }, 600);
         });
       }
+    }
+
+    if (autoArr.length === cardsArr.length) {
+      setIsFinished(true);
+      finishCurrentPart();
     }
   }, [autoArr.length, setAutoArr, setCardsArr]);
 
@@ -199,7 +186,7 @@ const GameField = ({
       {cardsArr.map((card) => (
         <Card
           key={card.id}
-          title={card.russian}
+          title={card.english}
           level={level}
           frontRotate={isPlaying && !card.isFlipped ? 'front-rotate' : ''}
           backRotate={isPlaying && !card.isFlipped ? 'back-rotate' : ''}

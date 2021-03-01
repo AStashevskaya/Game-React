@@ -35,8 +35,6 @@ const GamePage = (props) => {
   // const dispatch = useDispatch();
   const [play] = useSound(winSound);
 
-  console.log(level);
-
   const finishGame = () => {
     console.log('is finishing really');
     // dispatch(saveScore(score));
@@ -101,7 +99,7 @@ const GamePage = (props) => {
   }, [isWin, score]);
 
   useEffect(() => {
-    if (popupOpen && level !== 2) {
+    if (popupOpen && level !== 2 && !isAutoplaying) {
       setTimeout(() => {
         setPopupOpen(false);
         setLevel(level + 1);
@@ -111,13 +109,22 @@ const GamePage = (props) => {
       }, 3000);
     }
 
-    if (popupOpen && level === 2) {
+    if (popupOpen && level === 2 && !isAutoplaying) {
       const n = count * 150;
       setIsWin(true);
       console.log('useEffect', popupOpen, 'is open level 2', n);
       setTimeout(() => {
         setPopupOpen(false);
       }, n);
+    }
+
+    if (popupOpen && isAutoplaying) {
+      setTimeout(() => {
+        setPopupOpen(false);
+        updateField();
+        setScore(0);
+        setIsAutoplaying(false);
+      }, 3000);
     }
   }, [popupOpen]);
 
