@@ -6,6 +6,8 @@
 @import '_game';
 @import '_popup.scss';
 @import '_score';
+@import '_about';
+@import '_elements';
 
 html, body {
 width: 100%;
@@ -49,16 +51,22 @@ a {
     text-decoration: none;
 }
 
+@font-face {
+  font-family: 'Noconne';
+  src: local('Noconne'), url(../assets/fonts/Niconne-Regular.ttf) format('truetype');
+}
+
+
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Noconne'
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   
   code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', 'Noconne'
       monospace;
   }

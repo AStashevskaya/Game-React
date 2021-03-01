@@ -1,6 +1,7 @@
 .popup {
    @include fixed(fixed);
    @include centerFlex;
+   font-family: 'Noconne';
    top: 0;
    bottom: 0;
    background: rgba($color: #000000, $alpha: 0.5) url(../assets/images/frame.png);

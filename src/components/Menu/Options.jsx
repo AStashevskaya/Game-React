@@ -11,6 +11,7 @@ import useLocalStorage from '../../hooks/useLocState';
 // eslint-disable-next-line import/extensions
 import { menuLink } from '../../data/navBarData';
 import MenuButton from './MenuButton';
+import Title from './options/Title';
 
 import Selector from './options/Selector';
 
@@ -43,24 +44,27 @@ const OptionsPage = () => {
 
   return (
     <div className="options">
+      <Title text="options" />
+      <div className="options__content">
+        <MyButton color="primary" type="submit" onClick={switchSound}>
+          {isSoundOn ? 'Sound on' : 'Sound off'}
+        </MyButton>
 
-      <MyButton color="primary" type="submit" onClick={switchSound}>
-        {isSoundOn ? 'Sound on' : 'Sound off'}
-      </MyButton>
+        <MyButton color="primary" type="submit" onClick={switchMusic}>
+          {isMusicOn ? 'Music on' : 'Music off'}
+        </MyButton>
 
-      <MyButton color="primary" type="submit" onClick={switchMusic}>
-        {isMusicOn ? 'Music on' : 'Music off'}
-      </MyButton>
-
-      {/* <MyButton color="primary" type="submit" onClick={switchFS}>
+        {/* <MyButton color="primary" type="submit" onClick={switchFS}>
         {isMusicOn ? 'Music on' : 'Music off'}
       </MyButton> */}
 
-      <Selector />
-      <MenuButton
-        text={title}
-        path={path}
-      />
+        <Selector />
+        <MenuButton
+          text={title}
+          path={path}
+        />
+      </div>
+
     </div>
 
   );

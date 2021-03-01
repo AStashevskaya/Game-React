@@ -2,6 +2,7 @@ import React from 'react';
 
 import { menuLink } from '../../data/navBarData';
 import MenuButton from './MenuButton';
+import Title from './options/Title';
 
 const ScoresPage = () => {
   const { path, title } = menuLink;
@@ -11,28 +12,27 @@ const ScoresPage = () => {
 
   return (
     <div className="score">
-      <div className="score__title">
-        <h2> scores </h2>
-      </div>
+      <Title text="scores" />
       <div className="score__content">
         <table className="score__table">
-          <tr className="score__heading">
-            <td>№</td>
-            {' '}
-            <td>Name</td>
-            {' '}
-            <td>Date</td>
-            {' '}
-            <td>Score</td>
-          </tr>
-          {results.map((row, idx) => (
-            <tr>
-              <td>{idx + 1}</td>
-              <td>{row.name}</td>
-              <td>{row.date}</td>
-              <td>{row.score}</td>
+          <thead>
+            <tr className="score__heading">
+              <td>№</td>
+              <td>Name</td>
+              <td>Date</td>
+              <td>Score</td>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {results.map((row, idx) => (
+              <tr key={idx.toString()}>
+                <td>{idx + 1}</td>
+                <td>{row.name}</td>
+                <td>{row.date}</td>
+                <td>{row.score}</td>
+              </tr>
+            ))}
+          </tbody>
 
         </table>
       </div>
