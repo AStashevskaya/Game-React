@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, {
-  useEffect, useState,
+  useEffect, useState, useCallback,
 } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -13,59 +13,28 @@ import About from './Menu/About';
 import Scores from './Menu/Scores';
 import Game from './Game/Game';
 import GameOver from './GameOver/GameOver';
-// import Popup from './Popup/Popup';
-// import menuMusic from '../assets/sounds/menu.mp3';
 
 const App = () => {
-  const [location, setLocation] = useState(window.location.pathname);
+  const [location, setLocation] = useState('/');
 
-  // const audio = new Audio(menuMusic);
-  // audio.loop = true;
-  // audio.src = menuMusic;
-  // console.log(audio);
-
-  // const updateLevel = () => {
-  //   // setPopupOpen(true);
-  //   console.log('dff');
-  // };
-
-  // const finishGame = () => {
-  //   console.log(popupOpen, gameOver);
-  //   if (popupOpen && gameOver) {
-  //     setPopupOpen(false);
-  //     setGameOver(false);
-  //     console.log(popupOpen, gameOver);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setPopupOpen(false);
-  //     console.log('close');
-  //   }, 3000);
-  // }, [popupOpen]);
+  const onMouseMove = useCallback(() => {
+    if (location !== window.location.pathname) {
+      setLocation(window.location.pathname);
+    }
+  }, [location]);
 
   useEffect(() => {
-    window.addEventListener('click', () => {
-      if (location !== window.location.pathname) {
-        setLocation(window.location.pathname);
-        // if (location === '/game' && window.location.pathname === '/') finishGame();
+    window.addEventListener('mousemove', onMouseMove);
 
-        console.log('prevLocation:', location, window.location.pathname);
-      }
-    });
-    return window.addEventListener('click', () => {
-      if (location !== window.location.pathname) {
-        setLocation(window.location.pathname);
-      }
-    });
-  }, [location]);
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove);
+    };
+  }, [onMouseMove]);
 
   return (
     <Provider store={store}>
       <>
         <AudioComponent location={location} />
-        {/* <Popup trigger={popupOpen} /> */}
         <Router>
           <Switch>
             <Route exact path="/">

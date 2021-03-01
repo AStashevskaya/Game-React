@@ -18,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
 
 const GameOver = () => {
   const { path, title } = menuLink;
+  // const [play] = useSound(gameOverMusic);
+  // play();
 
   const classes = useStyles();
   const handleChange = (e) => {

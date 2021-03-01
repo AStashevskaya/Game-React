@@ -1,23 +1,24 @@
 import React, {
-  useState, useEffect, useRef, useCallback,
+  useState, useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
 import useSound from 'use-sound';
 import { useSelector, useDispatch } from 'react-redux';
 // eslint-disable-next-line no-unused-vars
-import { setLevel } from '../../redux/game/gameAction';
+// import { setLevel } from '../../redux/game/gameAction';
 
 import swapSound from '../../assets/sounds/swap.mp3';
 import correctSound from '../../assets/sounds/correct.mp3';
 import Card from './Card';
 
 const GameField = ({
-  cards, score, setscore, isPlaying, setIsplaying, level, isFinished, setIsFinished, isReseted,
+  cards, score, setscore, isPlaying, setIsplaying, level,
+  isFinished, setIsFinished, isReseted, isAutoplaying,
 }) => {
   const [cardsArr, setCardsArr] = useState(cards);
   const [openedCards, setOpendeCards] = useState([]);
   const [mached, setMached] = useState([]);
-  const [width, setWidth] = useState(0);
+  const [autoArr, setAutoArr] = useState([]);
 
   const [playSwap] = useSound(swapSound);
   const [playCorrect] = useSound(correctSound);
@@ -26,31 +27,13 @@ const GameField = ({
   // eslint-disable-next-line no-unused-vars
   const dispatch = useDispatch();
 
-  const containerRef = useRef(null);
-  const container = containerRef.current;
   // useEffect(() => {
-  //   if (container) {
-  //     width = container.getBoundingClientRect().width;
-  //     console.log(width);
-  //   }
-  // }, [container]);
+  //   window.addEventListener('resize', onResize);
 
-  const onResize = useCallback(() => {
-    console.log(container);
-    if (container) {
-      setWidth(container.getBoundingClientRect().width);
-    }
-
-    console.log(width, container);
-  }, [container]);
-
-  useEffect(() => {
-    window.addEventListener('resize', onResize);
-
-    return () => {
-      window.removeEventListener('resize', onResize);
-    };
-  }, [onResize]);
+  //   return () => {
+  //     window.removeEventListener('resize', onResize);
+  //   };
+  // }, [onResize]);
 
   // const container = containerRef.current;
   // let width;
@@ -76,15 +59,9 @@ const GameField = ({
   }, [isPlaying]);
 
   useEffect(() => {
-    console.log('cards', cards);
     setCardsArr([...cards]);
     setIsplaying(false);
   }, [cards]);
-
-  // useEffect(() => {
-  //   setCardsArr([...cards]);
-  //   setIsplaying(false);
-  // }, [level]);
 
   const finishCurrentPart = () => {
     setTimeout(() => {
@@ -102,17 +79,7 @@ const GameField = ({
 
     if (length === mached.length && isPlaying) {
       setIsFinished(true);
-      // dispatch(setLevel());
       finishCurrentPart();
-    //   setTimeout(() => {
-    //     cardsArr.forEach((el) => {
-    //       el.isFlipped = false;
-    //     });
-    //   }, 0);
-    //   setIsplaying(false);
-    //   setCardsArr(cardsArr);
-    //   setMached([]);
-    // }
     }
   };
 
@@ -160,20 +127,75 @@ const GameField = ({
   }, [mached.length]);
 
   const handleClick = (card) => {
-    if (isSoundOn) playSwap();
+    if (isSoundOn && !isAutoplaying) playSwap();
 
-    if (!isPlaying || openedCards.length > 2 || mached.includes(card)) return;
+    if (!isPlaying || openedCards.length > 2 || mached.includes(card) || isAutoplaying) return;
 
     const flippedCard = cardsArr.find((el) => el.id === card.id);
     flippedCard.isFlipped = true;
     flippedCard.clickedTimes += 1;
 
-    setCardsArr(cardsArr);
+    setCardsArr([...cardsArr]);
     setOpendeCards([...openedCards, card]);
   };
 
+  const startPlaying = () => {
+    setAutoArr([...autoArr, cardsArr[0]]);
+  };
+
+  const onAutoplaying = () => {
+    if (isSoundOn) playSwap();
+    cardsArr.forEach((el) => {
+      el.isFlipped = false;
+    });
+    setCardsArr([...cardsArr]);
+    setTimeout(() => {
+      startPlaying();
+    }, 0);
+    if (score) setscore(0);
+  };
+
+  useEffect(() => {
+    if (autoArr.length && autoArr.length <= cardsArr.length) {
+      const lastCard = autoArr[autoArr.length - 1];
+      const currentCard = cardsArr.find((el) => lastCard.id === el.id);
+      currentCard.isFlipped = true;
+
+      setTimeout(() => {
+        setCardsArr([...cardsArr]);
+      }, 300);
+
+      if (autoArr.length % 2) {
+        setTimeout(() => {
+          if (isSoundOn) playSwap();
+        }, 1000);
+        setTimeout(() => {
+          const second = cardsArr.find((el) => currentCard.id !== el.id
+          && currentCard.index === el.index);
+          second.isFlipped = true;
+          setAutoArr([...autoArr, second]);
+        }, 900);
+      } else {
+        setTimeout(() => {
+          const randomCard = cards.find((el) => !el.isFlipped);
+
+          setTimeout(() => {
+            if (isSoundOn) playSwap();
+            setAutoArr([...autoArr, randomCard]);
+          }, 600);
+        });
+      }
+    }
+  }, [autoArr.length, setAutoArr, setCardsArr]);
+
+  useEffect(() => {
+    if (isAutoplaying) {
+      onAutoplaying();
+    }
+  }, [isAutoplaying]);
+
   return (
-    <div className="gamefield" ref={containerRef}>
+    <div className="gamefield">
       {cardsArr.map((card) => (
         <Card
           key={card.id}
@@ -185,7 +207,6 @@ const GameField = ({
           cardID={card.card}
           image={card.image}
           isPlaying={isFinished}
-          width={width / 4}
         />
       ))}
     </div>
@@ -212,6 +233,7 @@ GameField.propTypes = {
   setIsFinished: PropTypes.func.isRequired,
   level: PropTypes.number.isRequired,
   isReseted: PropTypes.bool.isRequired,
+  isAutoplaying: PropTypes.bool.isRequired,
 //   correctCards: PropTypes.array,
 };
 

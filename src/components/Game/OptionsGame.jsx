@@ -9,7 +9,7 @@ import Display from './Display';
 import Timer from './Timer';
 
 const GameOptions = ({
-  score, level, count, setCount, isWin, finish, reset,
+  score, level, count, setCount, isWin, finish, reset, autoplay,
 }) => {
   const { path, title } = menuLink;
   const [startTiming, setStartTiming] = useState(false);
@@ -54,7 +54,7 @@ const GameOptions = ({
         />
         <SmallButton text="New Game" handleClick={reset} />
         <SmallButton text="Finish Game" handleClick={finish} />
-        <SmallButton text="Autoplaying" />
+        <SmallButton text="Autoplaying" handleClick={autoplay} />
         <MenuButton
           text={title}
           path={path}
@@ -78,6 +78,7 @@ GameOptions.propTypes = {
   isWin: PropTypes.bool.isRequired,
   finish: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
+  autoplay: PropTypes.func.isRequired,
 };
 
 export default GameOptions;

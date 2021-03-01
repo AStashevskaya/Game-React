@@ -23,6 +23,7 @@ const GamePage = (props) => {
   const [isFinished, setIsFinished] = useState(false);
   const [isReseted, setIsReseted] = useState(false);
   const [isWin, setIsWin] = useState(false);
+  const [isAutoplaying, setIsAutoplaying] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [count, setCount] = useState(63);
   const [gameOver, setGameOver] = useState(false);
@@ -137,6 +138,12 @@ const GamePage = (props) => {
     setGameOver(true);
   };
 
+  const autoplay = () => {
+    if (isAutoplaying) return;
+
+    setIsAutoplaying(true);
+  };
+
   return (
     <div className="game">
       <Popup
@@ -153,6 +160,7 @@ const GamePage = (props) => {
         isFinished={isFinished}
         setIsFinished={setIsFinished}
         isReseted={isReseted}
+        isAutoplaying={isAutoplaying}
       />
       <GameOptions
         score={score}
@@ -162,6 +170,7 @@ const GamePage = (props) => {
         isWin={isWin}
         finish={finish}
         reset={updateField}
+        autoplay={autoplay}
       />
 
     </div>

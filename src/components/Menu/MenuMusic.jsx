@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 
 import gameMusic from '../../assets/sounds/playing.mp3';
 import menuMusic from '../../assets/sounds/menu.mp3';
+import gameOverMusic from '../../assets/sounds/game-over.mp3';
 
 const AudioComponent = ({ location }) => {
   const musicRef = useRef();
@@ -19,8 +20,13 @@ const AudioComponent = ({ location }) => {
 
   const setMusic = () => {
     if (!music) return;
+    console.log(location, 'from music');
+
     if (location === '/game') {
       setCurrentMusic(gameMusic);
+    } else if (location === '/game-over') {
+      console.log(location, '/game-over');
+      setCurrentMusic(gameOverMusic);
     } else {
       setCurrentMusic(menuMusic);
     }

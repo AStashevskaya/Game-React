@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GameOver = () => {
-  // const score = useSelector((state) => state.game.score);
-  const score = localStorage.getItem('score');
+  const score = localStorage.getItem('final-score');
+
   console.log(score);
   const { path, title } = menuLink;
 
