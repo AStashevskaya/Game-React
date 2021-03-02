@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import useSound from 'use-sound';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 // eslint-disable-next-line no-unused-vars
 // import { setLevel } from '../../redux/game/gameAction';
 // eslint-disable-next-line no-unused-vars
@@ -26,12 +26,11 @@ const GameField = ({
   // eslint-disable-next-line no-unused-vars
   const [activeId, setActiveId] = useState(0);
 
-  const [playSwap] = useSound(swapSound);
-  const [playCorrect] = useSound(correctSound);
+  const soundVolume = useSelector((state) => state.music.soundVolume);
+  const [playSwap] = useSound(swapSound, { volume: soundVolume });
+  const [playCorrect] = useSound(correctSound, { volume: soundVolume });
 
   const isSoundOn = useSelector((state) => state.music.soundOn);
-  // eslint-disable-next-line no-unused-vars
-  const dispatch = useDispatch();
 
   const handleClick = (card) => {
     if (isSoundOn && !isAutoplaying) playSwap();

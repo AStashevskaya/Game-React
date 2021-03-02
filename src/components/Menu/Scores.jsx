@@ -6,7 +6,7 @@ import Title from './options/Title';
 
 const ScoresPage = () => {
   const { path, title } = menuLink;
-  let results = JSON.parse(localStorage.getItem('scores'));
+  let results = JSON.parse(localStorage.getItem('scores')) || [];
   results = results.sort((a, b) => b.score - a.score);
   results = results.length <= 10 ? results : results.slice(0, 10);
 

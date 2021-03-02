@@ -31,8 +31,9 @@ const GamePage = () => {
   const fieldSize = useSelector((state) => state.field.size);
   // const level = useSelector((state) => state.game.level);
   const isSoundOn = useSelector((state) => state.music.soundOn);
+  const soundVolume = useSelector((state) => state.music.soundVolume);
   // const dispatch = useDispatch();
-  const [play] = useSound(winSound);
+  const [play] = useSound(winSound, { volume: soundVolume });
 
   const finishGame = () => {
     console.log('is finishing really');

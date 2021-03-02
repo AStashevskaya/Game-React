@@ -9,8 +9,9 @@ import MyButton from './options/MyButton';
 import soundButton from '../../assets/sounds/button.mp3';
 
 const MenuButton = ({ path, text }) => {
-  const [play] = useSound(soundButton);
   const isSoundOn = useSelector((state) => state.music.soundOn);
+  const soundVolume = useSelector((state) => state.music.soundVolume);
+  const [play] = useSound(soundButton, { volume: soundVolume });
 
   // const handleClick = (e) => {
   //   if (isSoundOn) {

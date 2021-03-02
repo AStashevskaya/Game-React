@@ -23,6 +23,24 @@
     }
 }
 
+.toggle-btn {
+    @include equalSides(40px);
+    @include centerFlex;
+    box-shadow: 0 3px 5px 2px rgba(255, 105, 135, .3);
+    cursor: pointer;
+    background-color: white;
+    color: $balck;
+    font-size: 20px;
+    margin: 10px;
+    transform: scale(1.0);
+    transition: all .3s ease-in;
+   
+
+    &:hover {
+        transform: scale(1.1);
+    } 
+}
+
 .logo {
     width: 80px;
     height: 40px;

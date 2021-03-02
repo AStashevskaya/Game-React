@@ -14,18 +14,18 @@ const AudioComponent = ({ location }) => {
   const musicRef = useRef();
 
   const isMusicOn = useSelector((state) => state.music.musicOn);
+  const musicVolume = useSelector((state) => state.music.musicVolume);
 
   const [currentMusic, setCurrentMusic] = useState(menuMusic);
+
   const music = musicRef.current;
 
   const setMusic = () => {
     if (!music) return;
-    console.log(location, 'from music');
 
     if (location === '/game') {
       setCurrentMusic(gameMusic);
     } else if (location === '/game-over') {
-      console.log(location, '/game-over');
       setCurrentMusic(gameOverMusic);
     } else {
       setCurrentMusic(menuMusic);
@@ -34,6 +34,7 @@ const AudioComponent = ({ location }) => {
     if (isMusicOn) {
       music.play();
       music.loop = true;
+      music.volume = musicVolume;
     }
 
     if (!isMusicOn) music.pause();
@@ -41,7 +42,7 @@ const AudioComponent = ({ location }) => {
 
   useEffect(() => {
     setMusic();
-  }, [isMusicOn, location, currentMusic]);
+  }, [isMusicOn, location, currentMusic, musicVolume]);
 
   return (
     <>
