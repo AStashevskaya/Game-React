@@ -2,7 +2,7 @@
 import React, {
   useEffect, useState, useCallback,
 } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import store from '../redux/store';
@@ -37,26 +37,13 @@ const App = () => {
         <AudioComponent location={location} />
         <Router>
           <Switch>
-            <Route exact path="/">
-              <NavBar />
-            </Route>
-            <Route path="/game">
-              <Game />
-            </Route>
-            <Route path="/options">
-              <Options />
-            </Route>
-            <Route path="/about">
-              <About />
-            </Route>
-            <Route path="/scores">
-              <Scores />
-            </Route>
-            <Route path="/game-over">
-              <GameOver />
-            </Route>
+            <Route exact path="/" component={NavBar} />
+            <Route path="/game" component={Game} />
+            <Route path="/options" component={Options} />
+            <Route path="/about" component={About} />
+            <Route path="/scores" component={Scores} />
+            <Route path="/game-over" component={GameOver} />
           </Switch>
-
         </Router>
       </>
     </Provider>
