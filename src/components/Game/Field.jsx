@@ -6,6 +6,8 @@ import useSound from 'use-sound';
 import { useSelector, useDispatch } from 'react-redux';
 // eslint-disable-next-line no-unused-vars
 // import { setLevel } from '../../redux/game/gameAction';
+// eslint-disable-next-line no-unused-vars
+import useKey from '../../hooks/useKey';
 
 import swapSound from '../../assets/sounds/swap.mp3';
 import correctSound from '../../assets/sounds/correct.mp3';
@@ -19,6 +21,10 @@ const GameField = ({
   const [openedCards, setOpendeCards] = useState([]);
   const [mached, setMached] = useState([]);
   const [autoArr, setAutoArr] = useState([]);
+  // eslint-disable-next-line no-unused-vars
+  const [isKeyPlaying, setIsKeyPlaying] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [activeId, setActiveId] = useState(0);
 
   const [playSwap] = useSound(swapSound);
   const [playCorrect] = useSound(correctSound);
@@ -26,6 +32,71 @@ const GameField = ({
   const isSoundOn = useSelector((state) => state.music.soundOn);
   // eslint-disable-next-line no-unused-vars
   const dispatch = useDispatch();
+
+  const handleClick = (card) => {
+    if (isSoundOn && !isAutoplaying) playSwap();
+
+    if (!isPlaying || openedCards.length > 2 || mached.includes(card) || isAutoplaying) return;
+
+    const flippedCard = cardsArr.find((el) => el.id === card.id);
+    flippedCard.isFlipped = true;
+    flippedCard.clickedTimes += 1;
+
+    setCardsArr([...cardsArr]);
+    setOpendeCards([...openedCards, card]);
+  };
+
+  const finishCurrentPart = () => {
+    setTimeout(() => {
+      cardsArr.forEach((el) => {
+        el.isFlipped = false;
+      });
+    }, 0);
+    setIsplaying(false);
+    setCardsArr(cardsArr);
+    setMached([]);
+  };
+
+  const onEnterPress = () => {
+    handleClick(cardsArr[activeId - 1]);
+  };
+  const onSpacePress = () => {
+    setIsKeyPlaying(!isKeyPlaying);
+    if (isKeyPlaying) setActiveId(0);
+    if (!isKeyPlaying) setActiveId(1);
+  };
+
+  const onRightKey = () => {
+    if (!isKeyPlaying) return;
+
+    if (cardsArr.length > activeId) {
+      setActiveId(activeId + 1);
+    } else {
+      setActiveId(1);
+    }
+  };
+
+  const onLeftKey = () => {
+    if (!isKeyPlaying) return;
+
+    if (activeId > 0) {
+      setActiveId(activeId - 1);
+    } else {
+      setActiveId(cardsArr.length - 1);
+    }
+  };
+  const onkeyPress = ({ code }) => {
+    if (code === 'Space') onSpacePress();
+    if (code === 'Enter') onEnterPress();
+    if (code === 'KeyD') onRightKey();
+    if (code === 'KeyA') onLeftKey();
+  };
+
+  useEffect(() => {
+    document.addEventListener('keypress', onkeyPress);
+
+    return () => document.removeEventListener('keypress', onkeyPress);
+  }, [activeId, isKeyPlaying]);
 
   useEffect(() => {
     setIsFinished(false);
@@ -42,17 +113,6 @@ const GameField = ({
     setCardsArr([...cards]);
     setIsplaying(false);
   }, [cards]);
-
-  const finishCurrentPart = () => {
-    setTimeout(() => {
-      cardsArr.forEach((el) => {
-        el.isFlipped = false;
-      });
-    }, 0);
-    setIsplaying(false);
-    setCardsArr(cardsArr);
-    setMached([]);
-  };
 
   const checkIfWin = () => {
     const { length } = cards;
@@ -105,19 +165,6 @@ const GameField = ({
   useEffect(() => {
     checkIfWin();
   }, [mached.length]);
-
-  const handleClick = (card) => {
-    if (isSoundOn && !isAutoplaying) playSwap();
-
-    if (!isPlaying || openedCards.length > 2 || mached.includes(card) || isAutoplaying) return;
-
-    const flippedCard = cardsArr.find((el) => el.id === card.id);
-    flippedCard.isFlipped = true;
-    flippedCard.clickedTimes += 1;
-
-    setCardsArr([...cardsArr]);
-    setOpendeCards([...openedCards, card]);
-  };
 
   const startPlaying = () => {
     setAutoArr([...autoArr, cardsArr[0]]);
@@ -186,6 +233,8 @@ const GameField = ({
       {cardsArr.map((card) => (
         <Card
           key={card.id}
+          id={card.id}
+          activeId={activeId}
           title={card.english}
           level={level}
           frontRotate={isPlaying && !card.isFlipped ? 'front-rotate' : ''}

@@ -75,3 +75,7 @@
 
 .front-rotate {transform: rotateY(180deg);}
 .back-rotate {transform: rotateY(360deg)}
+
+.card.active {
+  border: 2px green solid;
+}

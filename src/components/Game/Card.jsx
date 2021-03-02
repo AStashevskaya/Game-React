@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 import cardBG from '../../assets/images/cardBG.jpg';
 
 const Card = ({
-  title, frontRotate, backRotate, handleClick, image, level, cardID, isPlaying, width,
+  title, frontRotate, backRotate, handleClick, image, level, cardID, isPlaying, id, activeId,
 }) => (
-  <div className="card" onClick={handleClick} width={width}>
+  <div className={id === activeId ? 'card active' : 'card'} onClick={handleClick}>
     <div className={`card__front ${frontRotate}`} id="card">
       {!isPlaying && level
        && cardID === 1 ? <div className="card__text">{title}</div> : <img src={image} alt={title} />}
@@ -38,7 +38,8 @@ Card.propTypes = {
   level: PropTypes.number.isRequired,
   cardID: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool.isRequired,
-  width: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
+  activeId: PropTypes.number.isRequired,
 };
 
 export default Card;

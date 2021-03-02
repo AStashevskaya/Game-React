@@ -16,8 +16,7 @@ import GameField from './Field';
 import Popup from '../Popup/Popup';
 import GameOptions from './OptionsGame';
 
-const GamePage = (props) => {
-  console.log(props);
+const GamePage = () => {
   const [score, setScore] = useState(0);
   const [isPlaying, setIsplaying] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
