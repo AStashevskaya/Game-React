@@ -7,7 +7,9 @@
     text-align: center;
 
     @media(max-width: 768px) {
+        margin-top: 20px;
         margin-bottom: 40px;
+        height: fit-content;
         }
 
     h2 {
@@ -20,18 +22,22 @@
         @media(max-width: 768px) {
             font-size: 50px;
             }
+
+        @media(max-width: 500px) {
+            font-size: 40px;
+            }
     }
 }
 
 .toggle-btn {
-    @include equalSides(40px);
+    @include equalSides(35px);
     @include centerFlex;
     box-shadow: 0 3px 5px 2px rgba(255, 105, 135, .3);
     cursor: pointer;
     background-color: white;
     color: $balck;
-    font-size: 20px;
-    margin: 10px;
+    font-size: 19px;
+    margin: 5px;
     transform: scale(1.0);
     transition: all .3s ease-in;
    

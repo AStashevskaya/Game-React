@@ -15,6 +15,8 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 140,
+    maxWidth: 200,
+    cursor: 'pointer',
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -30,15 +32,11 @@ const Selector = () => {
     dispatch(sizeChange(value.value));
   };
 
-  console.log(size);
-
   return (
     <FormControl variant="filled" className={classes.formControl}>
-      <InputLabel id="demo-simple-select-filled-label">Field Size</InputLabel>
+      <InputLabel>Field Size</InputLabel>
       <Select
-        labelId="demo-simple-select-filled-label"
-        id="demo-simple-select-filled"
-        // value={fieldsize}
+        value={size}
         onChange={handleChange}
       >
         <MenuItem value={18}>18</MenuItem>
@@ -48,15 +46,5 @@ const Selector = () => {
     </FormControl>
   );
 };
-
-// Selector.defaultProps = {
-//   // handleChange: () => {},
-//   fieldsize: 12,
-// };
-
-// Selector.propTypes = {
-//   // handleChange: PropTypes.func,
-//   fieldsize: PropTypes.number,
-// };
 
 export default Selector;

@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
-  FaVolumeUp, FaVolumeMute, FaPlus, FaMinus,
+  FaVolumeUp, FaVolumeMute, FaPlus, FaMinus, FaCompress, FaExpand,
 } from 'react-icons/fa';
 
 // import MyButton from './options/MyButton';
@@ -26,9 +26,12 @@ const OptionsPage = () => {
   const [isSoundOn, setisSoundOn] = useLocalStorage('soundOn', true);
   const [musVolume, setMusVolume] = useLocalStorage('musicVolume', 0.6);
   const [soundVolume, setSoundVolume] = useLocalStorage('soundVolume', 0.6);
+  const [FS, setFS] = useState(false);
 
-  const isFs = document.fullscreenElement;
-  console.log(isFs);
+  useEffect(() => {
+    setFS(document.fullscreenElement);
+    console.log(FS);
+  }, []);
 
   const dispatch = useDispatch();
 
@@ -81,10 +84,17 @@ const OptionsPage = () => {
     dispatch(turnDownSound());
   };
 
-  // const switchFS = (e) => {
-  //   e.preventDefault();
-  //   console.log(isFs);
-  // };
+  const toggleFS = (e) => {
+    e.preventDefault();
+    console.log(FS);
+    if (FS) {
+      setFS(!FS);
+      document.exitFullscreen();
+    } else {
+      setFS(!FS);
+      document.documentElement.requestFullscreen().catch((err) => console.log(err));
+    }
+  };
 
   return (
     <div className="options">
@@ -129,7 +139,17 @@ const OptionsPage = () => {
           />
         </div>
 
-        <Selector />
+        <div className="options__item">
+          <span>FullScreen:</span>
+          <ToggleBtn
+            text={FS ? <FaCompress /> : <FaExpand />}
+            handleClick={toggleFS}
+          />
+        </div>
+        <div className="options__item">
+          <span>Field Size:</span>
+          <Selector />
+        </div>
 
       </div>
       <MenuButton

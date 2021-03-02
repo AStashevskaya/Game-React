@@ -29,17 +29,14 @@ const GamePage = () => {
   const [level, setLevel] = useState(0);
 
   const fieldSize = useSelector((state) => state.field.size);
-
   const isSoundOn = useSelector((state) => state.music.soundOn);
   const soundVolume = useSelector((state) => state.music.soundVolume);
 
   const [play] = useSound(winSound, { volume: soundVolume });
 
   const finishGame = () => {
-    console.log('is finishing really');
-    // dispatch(saveScore(score));
     localStorage.setItem('final-score', JSON.stringify(score));
-    console.log(score);
+
     setIsplaying(false);
     setIsFinished(false);
     setPopupOpen(false);
@@ -58,7 +55,9 @@ const GamePage = () => {
       const newEl = { ...el, id: idx + 1, card: idx >= length / 2 ? 2 : 1 };
       return newEl;
     });
-    console.log(cardS, 'from callback');
+
+    cardS = cardS.sort(() => Math.random() - 0.5);
+
     return cardS;
   }, [level]);
 

@@ -8,7 +8,7 @@
     @include colomnFlex;
     margin: 0 auto;
     width: 600px;
-    padding: 50px 20px;
+    padding: 30px 20px;
     box-shadow: $b-shadow;
     background-color: white;
 
@@ -21,10 +21,14 @@
 &__item {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 30px;
+    // justify-content: center;
+    font-size: 25px;
     font-family: 'Noconne';
     color: $balck;
+
+    span {
+        width: 50%;
+    }
 }
 
 &__button {
