@@ -29,10 +29,10 @@ const GamePage = () => {
   const [level, setLevel] = useState(0);
 
   const fieldSize = useSelector((state) => state.field.size);
-  // const level = useSelector((state) => state.game.level);
+
   const isSoundOn = useSelector((state) => state.music.soundOn);
   const soundVolume = useSelector((state) => state.music.soundVolume);
-  // const dispatch = useDispatch();
+
   const [play] = useSound(winSound, { volume: soundVolume });
 
   const finishGame = () => {
@@ -137,7 +137,7 @@ const GamePage = () => {
   useEffect(() => {
     if (gameOver) {
       finishGame();
-      document.location.replace('/game-over');
+      document.location.replace('https://astashevskaya-game-react.netlify.app/game-over');
     }
   }, [gameOver]);
 

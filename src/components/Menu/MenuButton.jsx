@@ -13,12 +13,6 @@ const MenuButton = ({ path, text }) => {
   const soundVolume = useSelector((state) => state.music.soundVolume);
   const [play] = useSound(soundButton, { volume: soundVolume });
 
-  // const handleClick = (e) => {
-  //   if (isSoundOn) {
-  //     play();
-  //   }
-  //   console.log(e);
-  // };
   const handleClick = useCallback(() => {
     if (isSoundOn) play();
   });
