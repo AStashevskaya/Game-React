@@ -5,17 +5,25 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
+import Title from '../Menu/options/Title';
 import MenuButton from '../Menu/MenuButton';
 import SmallButton from '../Menu/options/SmallButton';
 import { menuLink } from '../../data/navBarData';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    margin: theme.spacing(1),
+    // margin: theme.spacing(1),
     minWidth: 300,
+    width: 500,
+    color: 'white',
+    margin: '0 auto',
+    display: 'flex',
+    alignItems: 'center',
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
+    width: 500,
+    color: 'white',
   },
 }));
 
@@ -65,16 +73,23 @@ const GameOver = () => {
   };
 
   return (
-    <div className="game_over">
-      <h2>
-        {' '}
-        gameOver, your score is
-        {JSON.parse(score)}
-      </h2>
-      <FormControl variant="filled" className={classes.formControl}>
-        <Input id="demo-simple-select-filled-label" value={name} onChange={handleChange} onKeyPress={handleKeyPress} />
-        <SmallButton text="send" handleClick={handleClick} submit={handleKeyPress} />
-      </FormControl>
+    <div className="game-over">
+      <Title text="Game Over" />
+
+      <div className="game-over__content">
+        <h3>
+          Your score is
+          {` ${score}`}
+          .
+          <br />
+          Save your score to continue
+        </h3>
+        <FormControl variant="filled" className={classes.formControl}>
+          <Input id="demo-simple-select-filled-label" value={name} onChange={handleChange} onKeyPress={handleKeyPress} />
+          <SmallButton text="send" handleClick={handleClick} submit={handleKeyPress} />
+        </FormControl>
+      </div>
+
       {/* <form>
         <input value={name} onChange={handleChange} />
         <SmallButton text="send" handleClick={handleClick} />

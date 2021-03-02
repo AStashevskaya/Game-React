@@ -37,9 +37,10 @@ const AboutPage = () => {
               Developed by:
             </span>
             <a href="https://github.com/AStashevskaya">Anastasiya Stashevskaya</a>
-            <span>2021</span>
-            <a href="https://rollingscopes.com/"><img className="logo" src={logo} alt="logo" /></a>
           </span>
+          <span>2021</span>
+          <a href="https://rollingscopes.com/"><img className="logo" src={logo} alt="logo" /></a>
+
         </div>
       </div>
 

@@ -4,6 +4,11 @@
     @include centerFlex;
     margin: 0 auto;
     text-transform: uppercase;
+    text-align: center;
+
+    @media(max-width: 768px) {
+        margin-bottom: 40px;
+        }
 
     h2 {
         font-family: 'Noconne';
@@ -11,6 +16,10 @@
         font-size: 70px;
         user-select: none;
         cursor: default;
+
+        @media(max-width: 768px) {
+            font-size: 50px;
+            }
     }
 }
 
