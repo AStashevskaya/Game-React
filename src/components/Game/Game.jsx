@@ -137,7 +137,10 @@ const GamePage = () => {
   useEffect(() => {
     if (gameOver) {
       finishGame();
-      document.location.replace('https://astashevskaya-game-react.netlify.app/game-over');
+      console.log(window.location.href);
+      const url = window.location.href;
+      // url.replace('');
+      window.location.assign(`${url}-over`);
     }
   }, [gameOver]);
 
