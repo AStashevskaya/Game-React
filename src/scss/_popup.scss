@@ -15,5 +15,9 @@
       color: #FFFFFF;
       font-size: 90px;
       font-weight: 600;
+      
+      @media(max-width: 768px) {
+         font-size: 60px;
+       } 
    }
 }

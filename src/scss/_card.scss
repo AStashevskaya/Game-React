@@ -12,6 +12,12 @@
       @include equalSides(80px);  
     }
 
+    @media (max-width: 500px){
+      @include equalSides(70px);  
+      margin: 2px;
+    }
+
+
     &:hover {
       box-shadow: none;
         transform: scale(1.05);
@@ -36,6 +42,10 @@
       font-family: 'Noconne';
       color: $balck;
       font-size: 30px;
+
+      @media(max-width: 768px) {
+        font-size: 23px;
+      } 
     }
 
     &__front,
