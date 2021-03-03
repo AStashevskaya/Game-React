@@ -17,15 +17,14 @@ const AudioComponent = ({ location }) => {
   const musicVolume = useSelector((state) => state.music.musicVolume);
 
   const [currentMusic, setCurrentMusic] = useState(menuMusic);
-
   const music = musicRef.current;
 
   const setMusic = () => {
     if (!music) return;
 
-    if (location === '/game') {
+    if (location.endsWith('/#game')) {
       setCurrentMusic(gameMusic);
-    } else if (location === '/game-over') {
+    } else if (location.endsWith('/#game-over')) {
       setCurrentMusic(gameOverMusic);
     } else {
       setCurrentMusic(menuMusic);
@@ -55,15 +54,11 @@ const AudioComponent = ({ location }) => {
 };
 
 AudioComponent.defaultProps = {
-  // isClicked: false,
-  // cardClicked: false,
   location: '/',
 };
 
 AudioComponent.propTypes = {
   location: PropTypes.string,
-  // isClicked: PropTypes.bool,
-  // cardClicked: PropTypes.bool,
 };
 
 export default AudioComponent;

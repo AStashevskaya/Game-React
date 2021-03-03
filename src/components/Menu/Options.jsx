@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import useSound from 'use-sound';
 import {
   FaVolumeUp, FaVolumeMute, FaPlus, FaMinus, FaCompress, FaExpand,
 } from 'react-icons/fa';
@@ -17,8 +18,9 @@ import useLocalStorage from '../../hooks/useLocState';
 import { menuLink } from '../../data/navBarData';
 import MenuButton from './MenuButton';
 import Title from './options/Title';
-
 import Selector from './options/Selector';
+
+import soundButton from '../../assets/sounds/button.mp3';
 
 const OptionsPage = () => {
   const { path, title } = menuLink;
@@ -27,6 +29,8 @@ const OptionsPage = () => {
   const [musVolume, setMusVolume] = useLocalStorage('musicVolume', 0.6);
   const [soundVolume, setSoundVolume] = useLocalStorage('soundVolume', 0.6);
   const [FS, setFS] = useState(false);
+
+  const [play] = useSound(soundButton, { volume: soundVolume });
 
   useEffect(() => {
     setFS(document.fullscreenElement);
@@ -37,20 +41,25 @@ const OptionsPage = () => {
 
   const switchSound = (e) => {
     e.preventDefault();
+    if (isSoundOn) play();
+
     setisSoundOn(!isSoundOn);
     dispatch(toggleSound());
   };
 
   const switchMusic = (e) => {
     e.preventDefault();
+    if (isSoundOn) play();
+
     setisMusicOn(!isMusicOn);
     dispatch(toggleMusic());
   };
 
   const onMusicUp = (e) => {
     e.preventDefault();
+    if (isSoundOn) play();
 
-    if (musVolume >= 1) return;
+    if (musVolume + 0.1 >= 1) return;
 
     setMusVolume(musVolume + 0.1);
     dispatch(turnUpMusic());
@@ -58,8 +67,9 @@ const OptionsPage = () => {
 
   const onMusicDown = (e) => {
     e.preventDefault();
+    if (isSoundOn) play();
 
-    if (musVolume <= 0.1) return;
+    if (musVolume - 0.1 <= 0) return;
 
     setMusVolume(musVolume - 0.1);
     dispatch(turnDownMusic());
@@ -67,8 +77,9 @@ const OptionsPage = () => {
 
   const onSoundUp = (e) => {
     e.preventDefault();
+    if (isSoundOn) play();
 
-    if (soundVolume >= 1) return;
+    if (soundVolume + 0.1 >= 1) return;
     setSoundVolume(soundVolume + 0.1);
 
     dispatch(turnUpSound());
@@ -76,8 +87,9 @@ const OptionsPage = () => {
 
   const onSoundDown = (e) => {
     e.preventDefault();
+    if (isSoundOn) play();
 
-    if (soundVolume <= 0.1) return;
+    if (soundVolume - 0.1 <= 0) return;
 
     setSoundVolume(soundVolume - 0.1);
 
@@ -86,7 +98,8 @@ const OptionsPage = () => {
 
   const toggleFS = (e) => {
     e.preventDefault();
-    console.log(FS);
+    if (isSoundOn) play();
+
     if (FS) {
       setFS(!FS);
       document.exitFullscreen();

@@ -15,13 +15,17 @@ import Game from './Game/Game';
 import GameOver from './GameOver/GameOver';
 
 const App = () => {
-  const [location, setLocation] = useState('/');
+  const [location, setLocation] = useState('');
+
+  useEffect(() => {
+    setLocation(window.location.href);
+  }, []);
 
   const onMouseMove = useCallback(() => {
-    if (location !== window.location.pathname) {
-      setLocation(window.location.pathname);
+    if (location !== window.location.href) {
+      setLocation(window.location.href);
     }
-  }, [location]);
+  }, [window.location.href]);
 
   useEffect(() => {
     window.addEventListener('mousemove', onMouseMove);
@@ -35,7 +39,7 @@ const App = () => {
     <Provider store={store}>
       <>
         <AudioComponent location={location} />
-        <Router>
+        <Router hashType="noslash">
           <Switch>
             <Route exact path="/" component={NavBar} />
             <Route path="/game" component={Game} />

@@ -9,7 +9,7 @@ const ToggleBtn = ({ text, handleClick }) => (
 );
 
 ToggleBtn.propTypes = {
-  text: PropTypes.objectOf.isRequired,
+  text: PropTypes.elementType.isRequired,
   handleClick: PropTypes.func.isRequired,
 };
 

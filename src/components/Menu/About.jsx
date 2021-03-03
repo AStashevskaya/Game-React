@@ -31,6 +31,10 @@ const AboutPage = () => {
           In options you may choose propriate settings for you.
           And in Scores - your best scores.
         </p>
+        <p>
+          Hot keys:
+        </p>
+
         <div className="about__footer">
           <span>
             <span>

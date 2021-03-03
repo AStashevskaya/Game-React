@@ -44,17 +44,23 @@ const GameOptions = ({
   return (
     <div className="game__settings">
       <>
-        <Display text={`Level: ${level + 1}`} />
-        <Display text={`Score: ${score}`} />
 
-        <Timer
-          isTiming={startTiming}
-          level={level}
-          count={count}
-        />
-        <SmallButton text="New Game" handleClick={reset} />
-        <SmallButton text="Finish Game" handleClick={finish} />
-        <SmallButton text="Autoplaying" handleClick={autoplay} />
+        <div className="game__buttons">
+          <Display text={`Level: ${level + 1}`} />
+          <Display text={`Score: ${score}`} />
+
+          <Timer
+            isTiming={startTiming}
+            level={level}
+            count={count}
+          />
+        </div>
+        <div className="game__buttons">
+          <SmallButton text="New Game" handleClick={reset} />
+          <SmallButton text="Finish" handleClick={finish} />
+          <SmallButton text="Auto-play" handleClick={autoplay} />
+        </div>
+
         <MenuButton
           text={title}
           path={path}

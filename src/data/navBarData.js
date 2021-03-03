@@ -1,9 +1,3 @@
-// interface INavbarLink {
-//     id: number
-//     title: string,
-//     path: string,
-// }
-
 const navbarLinks = [
   {
     id: 2,

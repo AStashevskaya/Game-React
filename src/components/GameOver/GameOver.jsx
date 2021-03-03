@@ -14,15 +14,16 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     // margin: theme.spacing(1),
     minWidth: 300,
-    width: 500,
+    maxWidth: 500,
     color: 'white',
     margin: '0 auto',
     display: 'flex',
     alignItems: 'center',
+    flexDirection: 'colomn',
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
-    width: 500,
+    maxWidth: 500,
     color: 'white',
   },
 }));
@@ -85,15 +86,10 @@ const GameOver = () => {
           Save your score to continue
         </h3>
         <FormControl variant="filled" className={classes.formControl}>
-          <Input id="demo-simple-select-filled-label" value={name} onChange={handleChange} onKeyPress={handleKeyPress} />
+          <Input value={name} onChange={handleChange} onKeyPress={handleKeyPress} />
           <SmallButton text="send" handleClick={handleClick} submit={handleKeyPress} />
         </FormControl>
       </div>
-
-      {/* <form>
-        <input value={name} onChange={handleChange} />
-        <SmallButton text="send" handleClick={handleClick} />
-      </form> */}
       <MenuButton
         text={title}
         path={path}
