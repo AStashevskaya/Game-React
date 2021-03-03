@@ -25,8 +25,6 @@ Card.defaultProps = {
   frontRotate: '',
   backRotate: '',
   image: '',
-//   isFlipped: false,
-//   handleClick: () => {},
 };
 
 Card.propTypes = {

@@ -11,18 +11,17 @@ import Card from './Card';
 
 const GameField = ({
   cards, score, setscore, isPlaying, setIsplaying, level,
-  isFinished, setIsFinished, isReseted, isAutoplaying,
+  isFinished, setIsFinished, isReseted, isAutoplaying, finish,
 }) => {
   const [cardsArr, setCardsArr] = useState(cards);
   const [openedCards, setOpendeCards] = useState([]);
-  const [mached, setMached] = useState([]);
+  const [machedArr, setmachedArr] = useState([]);
   const [autoArr, setAutoArr] = useState([]);
-  // eslint-disable-next-line no-unused-vars
   const [isKeyPlaying, setIsKeyPlaying] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [activeId, setActiveId] = useState(0);
 
   const soundVolume = useSelector((state) => state.music.soundVolume);
+  const lang = useSelector((state) => state.game.language);
   const [playSwap] = useSound(swapSound, { volume: soundVolume });
   const [playCorrect] = useSound(correctSound, { volume: soundVolume });
 
@@ -31,7 +30,7 @@ const GameField = ({
   const handleClick = (card) => {
     if (isSoundOn && !isAutoplaying) playSwap();
 
-    if (!isPlaying || openedCards.length > 2 || mached.includes(card) || isAutoplaying) return;
+    if (!isPlaying || openedCards.length > 2 || machedArr.includes(card) || isAutoplaying) return;
 
     const flippedCard = cardsArr.find((el) => el.id === card.id);
     flippedCard.isFlipped = true;
@@ -49,7 +48,7 @@ const GameField = ({
     }, 0);
     setIsplaying(false);
     setCardsArr(cardsArr);
-    setMached([]);
+    setmachedArr([]);
   };
 
   const onEnterPress = () => {
@@ -85,6 +84,7 @@ const GameField = ({
     if (code === 'Enter') onEnterPress();
     if (code === 'KeyD') onRightKey();
     if (code === 'KeyA') onLeftKey();
+    if (code === 'Backquote') finish();
   };
 
   useEffect(() => {
@@ -112,7 +112,7 @@ const GameField = ({
   const checkIfWin = () => {
     const { length } = cards;
 
-    if (length === mached.length && isPlaying) {
+    if (length === machedArr.length && isPlaying) {
       setIsFinished(true);
       finishCurrentPart();
     }
@@ -138,13 +138,13 @@ const GameField = ({
           setscore(score + 1);
         }
 
-        setMached([...mached, a, b]);
+        setmachedArr([...machedArr, a, b]);
 
         setOpendeCards([]);
       } else {
         setTimeout(() => {
           cardsArr.forEach((el) => {
-            if (mached.includes(el)) return;
+            if (machedArr.includes(el)) return;
 
             el.isFlipped = false;
           });
@@ -154,12 +154,14 @@ const GameField = ({
         }, 800);
       }
     }
-    localStorage.setItem('cards', JSON.stringify(cardsArr));
+    localStorage.setItem('cardsArr', JSON.stringify(cardsArr));
+    localStorage.setItem('machedArr', JSON.stringify(machedArr));
+    localStorage.setItem('openedArr', JSON.stringify(openedCards));
   }, [openedCards.length]);
 
   useEffect(() => {
     checkIfWin();
-  }, [mached.length]);
+  }, [machedArr.length]);
 
   const startPlaying = () => {
     setAutoArr([...autoArr, cardsArr[0]]);
@@ -230,7 +232,7 @@ const GameField = ({
           key={card.id}
           id={card.id}
           activeId={activeId}
-          title={card.english}
+          title={lang === 'en' ? card.english : card.russian}
           level={level}
           frontRotate={isPlaying && !card.isFlipped ? 'front-rotate' : ''}
           backRotate={isPlaying && !card.isFlipped ? 'back-rotate' : ''}
@@ -265,6 +267,7 @@ GameField.propTypes = {
   level: PropTypes.number.isRequired,
   isReseted: PropTypes.bool.isRequired,
   isAutoplaying: PropTypes.bool.isRequired,
+  finish: PropTypes.func.isRequired,
 //   correctCards: PropTypes.array,
 };
 

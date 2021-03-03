@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-// import { useSelector } from 'react-redux';
-// import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
+
 import Title from '../Menu/options/Title';
 import MenuButton from '../Menu/MenuButton';
 import SmallButton from '../Menu/options/SmallButton';
 import { menuLink } from '../../data/navBarData';
+import menuLinks from '../../constants/menuLinks';
+import gameOver from '../../constants/game-over';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -33,12 +35,16 @@ const GameOver = () => {
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const scores = JSON.parse(localStorage.getItem('scores')) || [];
-  const { path, title } = menuLink;
+
+  const { path } = menuLink;
+
+  const lang = useSelector((state) => state.game.language);
+  const {
+    SCORE, GAME_OVER, SAVE, SEND,
+  } = gameOver[lang];
+  const { MENU } = menuLinks[lang];
 
   const classes = useStyles();
-  // const handleChange = ({ target: value }) => {
-  //   setName(name + value);
-  // };
 
   const handleChange = ({ target }) => {
     setName(target.value);
@@ -75,23 +81,23 @@ const GameOver = () => {
 
   return (
     <div className="game-over">
-      <Title text="Game Over" />
+      <Title text={GAME_OVER} />
 
       <div className="game-over__content">
         <h3>
-          Your score is
+          {SCORE}
           {` ${score}`}
           .
           <br />
-          Save your score to continue
+          {SAVE}
         </h3>
         <FormControl variant="filled" className={classes.formControl}>
           <Input value={name} onChange={handleChange} onKeyPress={handleKeyPress} />
-          <SmallButton text="send" handleClick={handleClick} submit={handleKeyPress} />
+          <SmallButton text={SEND} handleClick={handleClick} submit={handleKeyPress} />
         </FormControl>
       </div>
       <MenuButton
-        text={title}
+        text={MENU}
         path={path}
       />
     </div>

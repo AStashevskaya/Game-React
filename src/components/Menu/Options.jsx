@@ -12,6 +12,9 @@ import ToggleBtn from '../elements/ToggleBtn';
 import {
   toggleMusic, toggleSound, turnDownMusic, turnUpMusic, turnDownSound, turnUpSound,
 } from '../../redux/music/action';
+import options from '../../constants/options';
+import menuLinks from '../../constants/menuLinks';
+import toggleLanguage from '../../redux/game/gameAction';
 import useLocalStorage from '../../hooks/useLocState';
 
 // eslint-disable-next-line import/extensions
@@ -23,18 +26,23 @@ import Selector from './options/Selector';
 import soundButton from '../../assets/sounds/button.mp3';
 
 const OptionsPage = () => {
-  const { path, title } = menuLink;
+  const { path } = menuLink;
   const [isMusicOn, setisMusicOn] = useLocalStorage('musicOn', false);
   const [isSoundOn, setisSoundOn] = useLocalStorage('soundOn', true);
   const [musVolume, setMusVolume] = useLocalStorage('musicVolume', 0.6);
   const [soundVolume, setSoundVolume] = useLocalStorage('soundVolume', 0.6);
+  const [language, setLanguage] = useLocalStorage('language', 'en');
   const [FS, setFS] = useState(false);
 
   const [play] = useSound(soundButton, { volume: soundVolume });
 
+  const {
+    MUSIC, SOUND, SOUND_VOLUME, MUSIC_VOLUME, FULLSCREEN, FIELD_SIZE, LANGUAGE,
+  } = options[language];
+  const { OPTIONS, MENU } = menuLinks[language];
+
   useEffect(() => {
     setFS(document.fullscreenElement);
-    console.log(FS);
   }, []);
 
   const dispatch = useDispatch();
@@ -109,19 +117,32 @@ const OptionsPage = () => {
     }
   };
 
+  const switchLanguage = (e) => {
+    e.preventDefault();
+    if (isSoundOn) play();
+
+    if (language === 'en') {
+      setLanguage('ru');
+    } else {
+      setLanguage('en');
+    }
+
+    dispatch(toggleLanguage());
+  };
+
   return (
     <div className="options">
-      <Title text="options" />
+      <Title text={OPTIONS} />
       <div className="options__content">
         <div className="options__item">
-          <span>Sound:</span>
+          <span>{SOUND}</span>
           <ToggleBtn
             text={isSoundOn ? <FaVolumeUp /> : <FaVolumeMute />}
             handleClick={switchSound}
           />
         </div>
         <div className="options__item">
-          <span>Music:</span>
+          <span>{MUSIC}</span>
           <ToggleBtn
             text={isMusicOn ? <FaVolumeUp /> : <FaVolumeMute />}
             handleClick={switchMusic}
@@ -129,7 +150,7 @@ const OptionsPage = () => {
         </div>
 
         <div className="options__item">
-          <span>Volume Music:</span>
+          <span>{MUSIC_VOLUME}</span>
           <ToggleBtn
             text={<FaPlus />}
             handleClick={onMusicUp}
@@ -141,7 +162,7 @@ const OptionsPage = () => {
         </div>
 
         <div className="options__item">
-          <span>Volume Sound:</span>
+          <span>{SOUND_VOLUME}</span>
           <ToggleBtn
             text={<FaPlus />}
             handleClick={onSoundUp}
@@ -153,20 +174,29 @@ const OptionsPage = () => {
         </div>
 
         <div className="options__item">
-          <span>FullScreen:</span>
+          <span>{FULLSCREEN}</span>
           <ToggleBtn
             text={FS ? <FaCompress /> : <FaExpand />}
             handleClick={toggleFS}
           />
         </div>
+
         <div className="options__item">
-          <span>Field Size:</span>
+          <span>{LANGUAGE}</span>
+          <ToggleBtn
+            text={language === 'en' ? 'en' : 'ru'}
+            handleClick={switchLanguage}
+          />
+        </div>
+
+        <div className="options__item">
+          <span>{FIELD_SIZE}</span>
           <Selector />
         </div>
 
       </div>
       <MenuButton
-        text={title}
+        text={MENU}
         path={path}
       />
     </div>

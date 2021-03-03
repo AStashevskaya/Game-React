@@ -1,46 +1,56 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import { menuLink } from '../../data/navBarData';
+import menuLinks from '../../constants/menuLinks';
+import ABOUT from '../../constants/about';
 import MenuButton from './MenuButton';
 import Title from './options/Title';
 
 import logo from '../../assets/images/rs_school_js.svg';
 
 const AboutPage = () => {
-  const { path, title } = menuLink;
+  const { path } = menuLink;
+  const lang = useSelector((state) => state.game.language);
+
+  const {
+    MEMORY_GAME, GOAL, RULES, LEVELS, ABOUT_MENU, HOT_KEYS, NAME, DEVELOPED,
+    LEFT, RIGHT, TOGGLE, SUBMIT, QUIT,
+  } = ABOUT[lang];
+  const { MENU } = menuLinks[lang];
 
   return (
     <div className="about">
-      <Title text="Memory game" />
+      <Title text={MEMORY_GAME} />
 
       <div className="about__content">
         <p>
-          Try to remember as many cards as possible
+          {GOAL}
           <br />
-          If you guess a pair of cards from the first time -
-          you will recieve to your score +5 points, otherwise +1.
+          {RULES}
           <br />
-          There are three levels of the game.
-          In first you should compare 2 pictures.
-          In second - picture with the word.
-          And in third - you should compare picture with the word,
-          but during one minute.
-          If you are in time, you will recive a bonus score, otherwise game will be over.
+          {LEVELS}
         </p>
         <p>
-          In options you may choose propriate settings for you.
-          And in Scores - your best scores.
+          {ABOUT_MENU}
         </p>
         <p>
-          Hot keys:
+          {HOT_KEYS}
         </p>
+        <ul>
+          <li>{LEFT}</li>
+          <li>{RIGHT}</li>
+          <li>{SUBMIT}</li>
+          <li>{TOGGLE}</li>
+          <li>{QUIT}</li>
+        </ul>
 
         <div className="about__footer">
           <span>
             <span>
-              Developed by:
+              {DEVELOPED}
             </span>
-            <a href="https://github.com/AStashevskaya">Anastasiya Stashevskaya</a>
+            <a href="https://github.com/AStashevskaya">{NAME}</a>
           </span>
           <span>2021</span>
           <a href="https://rollingscopes.com/"><img className="logo" src={logo} alt="logo" /></a>
@@ -49,7 +59,7 @@ const AboutPage = () => {
       </div>
 
       <MenuButton
-        text={title}
+        text={MENU}
         path={path}
       />
     </div>

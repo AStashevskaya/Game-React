@@ -14,7 +14,7 @@
         padding: 50px 20px;
         font-family: 'Noconne';
         font-size: 24px;
-        max-height: 480px;
+        max-height: 380px;
         font-family: 'Noconne';
         font-size: 24px;
         scroll-behavior: smooth;
@@ -39,5 +39,12 @@
         a {
             color: $balck;       
         }
+    }
+}
+
+.about ul {
+    margin-top: 20px;
+    li {
+    margin: 0;
     }
 }

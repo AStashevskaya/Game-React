@@ -1,31 +1,17 @@
-import { SET_LEVEL, FINISH_GAME, SET_SCORE } from '../constants';
+import { TOGGLE_LANGUAGE } from '../constants';
 
+const language = localStorage.getItem('language') === null ? 'en' : JSON.parse(localStorage.getItem('language'));
 const gameState = {
-  level: 0,
-  gameOver: false,
-  score: 0,
+  language,
 };
 
 const gameReducer = (state = gameState, action) => {
   switch (action.type) {
-    case SET_LEVEL:
+    case TOGGLE_LANGUAGE:
       return {
         ...state,
-        level: state.level + 1,
+        language: state.language === 'en' ? 'ru' : 'en',
       };
-    case FINISH_GAME:
-      return {
-        ...state,
-        gameOver: !state.gameOver,
-      };
-
-    case SET_SCORE: {
-      console.log(action.payload);
-      return {
-        ...state,
-        score: action.payload,
-      };
-    }
     default: return state;
   }
 };

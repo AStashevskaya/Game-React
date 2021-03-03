@@ -1,13 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-const Popup = ({ trigger, isWin }) => (trigger ? (
-  <div className="popup">
-    <div className="popup__content">
-      {isWin ? <h2 className="popup__text">Congratulations! You Win</h2> : <h2 className="popup__text">Level up!</h2>}
+import POPUP from '../../constants/popup';
+
+const Popup = ({ trigger, isWin }) => {
+  const lang = useSelector((state) => state.game.language);
+
+  const { LEVEL_UP, CONGRATS } = POPUP[lang];
+
+  return (trigger ? (
+    <div className="popup">
+      <div className="popup__content">
+        <h2 className="popup__text">{isWin ? CONGRATS : LEVEL_UP}</h2>
+      </div>
     </div>
-  </div>
-) : '');
+  ) : '');
+};
 
 Popup.propTypes = {
   trigger: PropTypes.bool.isRequired,

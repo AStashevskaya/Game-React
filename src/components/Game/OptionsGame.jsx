@@ -1,8 +1,12 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import { menuLink } from '../../data/navBarData';
+import menuLinks from '../../constants/menuLinks';
+import { GAME_BTNS, GAME_DISPLAYS } from '../../constants/btns';
 import MenuButton from '../Menu/MenuButton';
 import SmallButton from '../Menu/options/SmallButton';
 import Display from './Display';
@@ -13,6 +17,11 @@ const GameOptions = ({
 }) => {
   const { path, title } = menuLink;
   const [startTiming, setStartTiming] = useState(false);
+  const lang = useSelector((state) => state.game.language);
+
+  const { SCORE, LEVEL } = GAME_DISPLAYS[lang];
+  const { NEW_GAME, FINISH, AUTO_PLAY } = GAME_BTNS[lang];
+  const { MENU } = menuLinks[lang];
 
   useEffect(() => {
     let timer;
@@ -46,8 +55,8 @@ const GameOptions = ({
       <>
 
         <div className="game__buttons">
-          <Display text={`Level: ${level + 1}`} />
-          <Display text={`Score: ${score}`} />
+          <Display text={`${LEVEL}: ${level + 1}`} />
+          <Display text={`${SCORE}: ${score}`} />
 
           <Timer
             isTiming={startTiming}
@@ -56,13 +65,13 @@ const GameOptions = ({
           />
         </div>
         <div className="game__buttons">
-          <SmallButton text="New Game" handleClick={reset} />
-          <SmallButton text="Finish" handleClick={finish} />
-          <SmallButton text="Auto-play" handleClick={autoplay} />
+          <SmallButton text={NEW_GAME} handleClick={reset} />
+          <SmallButton text={FINISH} handleClick={finish} />
+          <SmallButton text={AUTO_PLAY} handleClick={autoplay} />
         </div>
 
         <MenuButton
-          text={title}
+          text={MENU}
           path={path}
         />
       </>
@@ -73,7 +82,7 @@ const GameOptions = ({
 GameOptions.defaultProps = {
   score: 0,
   level: 0,
-  count: 23,
+  count: 63,
 };
 
 GameOptions.propTypes = {

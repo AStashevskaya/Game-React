@@ -1,16 +1,11 @@
-/* eslint-disable func-names */
-/* eslint-disable no-console */
 import React, { useEffect, useState, useCallback } from 'react';
-// import PropTypes from 'prop-types';
 
 import { useSelector } from 'react-redux';
 import useSound from 'use-sound';
 
 import winSound from '../../assets/sounds/win.mp3';
-// import failSound from '../../assets/sounds/game-over.mp3'
 
 import getRandomArray from '../../utils/getRandomArray';
-// import { setScore as saveScore } from '../../redux/game/gameAction';
 import englishCards from '../../data/englishCards';
 import GameField from './Field';
 import Popup from '../Popup/Popup';
@@ -56,7 +51,7 @@ const GamePage = () => {
       return newEl;
     });
 
-    // cardS = cardS.sort(() => Math.random() - 0.5);
+    cardS = cardS.sort(() => Math.random() - 0.5);
 
     return cardS;
   }, [level]);
@@ -166,6 +161,7 @@ const GamePage = () => {
         setIsFinished={setIsFinished}
         isReseted={isReseted}
         isAutoplaying={isAutoplaying}
+        finish={finish}
       />
       <GameOptions
         score={score}

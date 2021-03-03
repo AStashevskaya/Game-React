@@ -1,16 +1,7 @@
-import { SET_LEVEL, FINISH_GAME, SET_SCORE } from '../constants';
+import { TOGGLE_LANGUAGE } from '../constants';
 
-const setLevel = () => ({
-  type: SET_LEVEL,
+const toggleLanguage = () => ({
+  type: TOGGLE_LANGUAGE,
 });
 
-const setScore = (score = 0) => ({
-  type: SET_SCORE,
-  payload: score,
-});
-
-const finishGame = () => ({
-  type: FINISH_GAME,
-});
-
-export { setLevel, finishGame, setScore };
+export default toggleLanguage;

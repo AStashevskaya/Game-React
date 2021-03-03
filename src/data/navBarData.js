@@ -1,22 +1,26 @@
 const navbarLinks = [
   {
-    id: 2,
-    title: 'New Game',
+    id: 1,
+    en: 'New Game',
+    ru: 'Новая Игра',
     path: '/game',
   },
   {
-    id: 3,
-    title: 'Options',
+    id: 2,
+    en: 'Options',
+    ru: 'Опции',
     path: '/options',
   },
   {
-    id: 4,
-    title: 'Scores',
+    id: 3,
+    en: 'Scores',
+    ru: 'Результаты',
     path: '/scores',
   },
   {
-    id: 5,
-    title: 'About',
+    id: 4,
+    en: 'About',
+    ru: 'об игре',
     path: '/about',
   },
 ];
