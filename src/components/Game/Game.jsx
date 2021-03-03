@@ -56,7 +56,7 @@ const GamePage = () => {
       return newEl;
     });
 
-    cardS = cardS.sort(() => Math.random() - 0.5);
+    // cardS = cardS.sort(() => Math.random() - 0.5);
 
     return cardS;
   }, [level]);
@@ -65,7 +65,6 @@ const GamePage = () => {
 
   const updateField = () => {
     setTimeout(() => {
-      console.log('update field');
       setCards(generateCards);
     }, 1000);
 
@@ -102,16 +101,14 @@ const GamePage = () => {
       setTimeout(() => {
         setPopupOpen(false);
         setLevel(level + 1);
-        console.log('useEffect', popupOpen, 'level');
-        // setIsFinished(false);
         updateField();
       }, 3000);
     }
 
     if (popupOpen && level === 2 && !isAutoplaying) {
       const n = count * 150;
+
       setIsWin(true);
-      console.log('useEffect', popupOpen, 'is open level 2', n);
       setTimeout(() => {
         setPopupOpen(false);
       }, n);
@@ -136,9 +133,8 @@ const GamePage = () => {
   useEffect(() => {
     if (gameOver) {
       finishGame();
-      console.log(window.location.href);
+
       const url = window.location.href;
-      // url.replace('');
       window.location.assign(`${url}-over`);
     }
   }, [gameOver]);
@@ -157,7 +153,7 @@ const GamePage = () => {
     <div className="game">
       <Popup
         trigger={popupOpen}
-        gameOver={gameOver}
+        isWin={isWin}
       />
       <GameField
         level={level}

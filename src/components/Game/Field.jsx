@@ -4,10 +4,6 @@ import React, {
 import PropTypes from 'prop-types';
 import useSound from 'use-sound';
 import { useSelector } from 'react-redux';
-// eslint-disable-next-line no-unused-vars
-// import { setLevel } from '../../redux/game/gameAction';
-// eslint-disable-next-line no-unused-vars
-import useKey from '../../hooks/useKey';
 
 import swapSound from '../../assets/sounds/swap.mp3';
 import correctSound from '../../assets/sounds/correct.mp3';
