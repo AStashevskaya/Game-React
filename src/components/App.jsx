@@ -1,83 +1,56 @@
+/* eslint-disable no-console */
 import React, {
-  Fragment, useState, useEffect,
+  useEffect, useState, useCallback,
 } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
+import store from '../redux/store';
 import AudioComponent from './Menu/MenuMusic';
 import NavBar from './Menu/NavBar';
 import Options from './Menu/Options';
 import About from './Menu/About';
 import Scores from './Menu/Scores';
 import Game from './Game/Game';
+import GameOver from './GameOver/GameOver';
 
 const App = () => {
-  const [musicOn, setMusicOn] = useState(false);
-  const [soundOn, setSoundOn] = useState(true);
-  const [isClicked, setIsClicked] = useState(false);
-
-  const toggleMusic = (e) => {
-    e.preventDefault();
-    setMusicOn(!musicOn);
-  };
+  const [location, setLocation] = useState('');
 
   useEffect(() => {
-    console.log(isClicked, 'from use');
-    setIsClicked(false);
-  }, [isClicked]);
+    setLocation(window.location.href);
+  }, []);
 
-  const getClick = () => {
-    console.log(isClicked, 'from method');
-    setIsClicked(true);
-  };
+  const onMouseMove = useCallback(() => {
+    if (location !== window.location.href) {
+      setLocation(window.location.href);
+    }
+  }, [window.location.href]);
 
-  const toggleSound = (e) => {
-    e.preventDefault();
-    setSoundOn(!soundOn);
-  };
+  useEffect(() => {
+    window.addEventListener('mousemove', onMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove);
+    };
+  }, [onMouseMove]);
+
   return (
-    <>
-      <AudioComponent
-        MusicOn={musicOn}
-        SoundOn={soundOn}
-        isClicked={isClicked}
-      />
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <NavBar
-              getClick={getClick}
-            />
-          </Route>
-          <Route path="/game">
-            <Game
-              getClick={getClick}
-              MusicOn={musicOn}
-              SoundOn={soundOn}
-            />
-          </Route>
-          <Route path="/options">
-            <Options
-              getClick={getClick}
-              MusicOn={musicOn}
-              SoundOn={soundOn}
-              toggleMusic={toggleMusic}
-              toggleSound={toggleSound}
-            />
-          </Route>
-          <Route path="/about">
-            <About
-              getClick={getClick}
-            />
-          </Route>
-          <Route path="/scores">
-            <Scores
-              getClick={getClick}
-            />
-          </Route>
-        </Switch>
-
-      </Router>
-    </>
+    <Provider store={store}>
+      <>
+        <AudioComponent location={location} />
+        <Router hashType="noslash">
+          <Switch>
+            <Route exact path="/" component={NavBar} />
+            <Route path="/game" component={Game} />
+            <Route path="/options" component={Options} />
+            <Route path="/about" component={About} />
+            <Route path="/scores" component={Scores} />
+            <Route path="/game-over" component={GameOver} />
+          </Switch>
+        </Router>
+      </>
+    </Provider>
 
   );
 };

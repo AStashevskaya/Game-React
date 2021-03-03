@@ -1,32 +1,69 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import { menuLink } from '../../data/navBarData';
+import menuLinks from '../../constants/menuLinks';
+import ABOUT from '../../constants/about';
 import MenuButton from './MenuButton';
+import Title from './options/Title';
 
-const AboutPage = ({ getClick }) => {
-  const { path, title } = menuLink;
+import logo from '../../assets/images/rs_school_js.svg';
+
+const AboutPage = () => {
+  const { path } = menuLink;
+  const lang = useSelector((state) => state.game.language);
+
+  const {
+    MEMORY_GAME, GOAL, RULES, LEVELS, ABOUT_MENU, HOT_KEYS, NAME, DEVELOPED,
+    LEFT, RIGHT, TOGGLE, SUBMIT, QUIT,
+  } = ABOUT[lang];
+  const { MENU } = menuLinks[lang];
 
   return (
     <div className="about">
-      <h1>about </h1>
+      <Title text={MEMORY_GAME} />
+
+      <div className="about__content">
+        <p>
+          {GOAL}
+          <br />
+          {RULES}
+          <br />
+          {LEVELS}
+        </p>
+        <p>
+          {ABOUT_MENU}
+        </p>
+        <p>
+          {HOT_KEYS}
+        </p>
+        <ul>
+          <li>{LEFT}</li>
+          <li>{RIGHT}</li>
+          <li>{SUBMIT}</li>
+          <li>{TOGGLE}</li>
+          <li>{QUIT}</li>
+        </ul>
+
+        <div className="about__footer">
+          <span>
+            <span>
+              {DEVELOPED}
+            </span>
+            <a href="https://github.com/AStashevskaya">{NAME}</a>
+          </span>
+          <span>2021</span>
+          <a href="https://rollingscopes.com/"><img className="logo" src={logo} alt="logo" /></a>
+
+        </div>
+      </div>
 
       <MenuButton
-        getClick={getClick}
-        text={title}
+        text={MENU}
         path={path}
       />
     </div>
   );
-};
-
-AboutPage.defaultProps = {
-
-  getClick: () => {},
-};
-
-AboutPage.propTypes = {
-  getClick: PropTypes.func,
 };
 
 export default AboutPage;

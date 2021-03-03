@@ -1,29 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import MenuButton from './MenuButton';
 
 import { navbarLinks as linksData } from '../../data/navBarData';
 
-const NavBar = ({ getClick }) => (
-  <nav>
-    <ul>
-      {linksData.map((el) => (
-        <MenuButton
-          getClick={getClick}
-          text={el.title}
-          path={el.path}
-          key={el.id.toString()}
-        />
-      ))}
-    </ul>
-  </nav>
-);
+const NavBar = () => {
+  const lang = useSelector((state) => state.game.language);
 
-NavBar.defaultProps = {
-  getClick: () => {},
+  return (
+    <nav>
+      <ul>
+        {linksData.map((el) => (
+          <MenuButton
+            text={el[lang]}
+            path={el.path}
+            key={el.id.toString()}
+          />
+        ))}
+      </ul>
+    </nav>
+  );
 };
 
-NavBar.propTypes = {
-  getClick: PropTypes.func,
-};
 export default NavBar;

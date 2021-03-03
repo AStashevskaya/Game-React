@@ -1,31 +1,42 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import useSound from 'use-sound';
+import { useSelector } from 'react-redux';
 
-const MenuButton = ({ path, text, getClick }) => (
-  <li onClick={getClick}>
-    <Link to={path}>
-      {text}
-    </Link>
-    {/* <a href={path}>
-      {text}
-    </a> */}
+import MyButton from './options/MyButton';
+import soundButton from '../../assets/sounds/button.mp3';
 
-  </li>
-);
+const MenuButton = ({ path, text }) => {
+  const isSoundOn = useSelector((state) => state.music.soundOn);
+  const soundVolume = useSelector((state) => state.music.soundVolume);
+  const [play] = useSound(soundButton, { volume: soundVolume });
 
+  const handleClick = useCallback(() => {
+    if (isSoundOn) play();
+  });
+
+  return (
+    <li onMouseDown={handleClick}>
+
+      <Link to={path}>
+        <MyButton>
+          {text}
+        </MyButton>
+      </Link>
+
+    </li>
+  );
+};
 MenuButton.defaultProps = {
   path: '',
   text: '',
-  getClick: () => {},
 };
 
 MenuButton.propTypes = {
   path: PropTypes.string,
   text: PropTypes.string,
-  getClick: PropTypes.func,
 };
 
 export default MenuButton;

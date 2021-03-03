@@ -1,70 +1,64 @@
 /* eslint-disable jsx-a11y/media-has-caption */
-import React, { useRef, useEffect, useState } from 'react';
+// /* eslint-disable jsx-a11y/media-has-caption */
+import React, {
+  useRef, useEffect, useState,
+} from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import soundButton from '../../assets/sounds/button.mp3';
+import gameMusic from '../../assets/sounds/playing.mp3';
 import menuMusic from '../../assets/sounds/menu.mp3';
+import gameOverMusic from '../../assets/sounds/game-over.mp3';
 
-const AudioComponent = ({ MusicOn, SoundOn, isClicked }) => {
+const AudioComponent = ({ location }) => {
   const musicRef = useRef();
-  const audioRef = useRef();
 
-  const [currentClickSound, setCurrentClickSound] = useState('');
-  //   const [currentMusic, setCurrentMusic] = useState('');
-  const audio = audioRef.current;
+  const isMusicOn = useSelector((state) => state.music.musicOn);
+  const musicVolume = useSelector((state) => state.music.musicVolume);
+
+  const [currentMusic, setCurrentMusic] = useState(menuMusic);
   const music = musicRef.current;
 
   const setMusic = () => {
     if (!music) return;
-    if (MusicOn) {
-      music.play();
-      music.loop = true;
+
+    if (location.endsWith('/#game')) {
+      setCurrentMusic(gameMusic);
+    } else if (location.endsWith('/#game-over')) {
+      setCurrentMusic(gameOverMusic);
+    } else {
+      setCurrentMusic(menuMusic);
     }
 
-    if (!MusicOn) music.pause();
+    if (isMusicOn) {
+      music.play();
+      music.loop = true;
+      music.volume = musicVolume;
+    }
+
+    if (!isMusicOn) music.pause();
   };
 
   useEffect(() => {
-    if (currentClickSound !== soundButton) {
-      setCurrentClickSound(soundButton);
-    }
-
-    if (isClicked && SoundOn) audio.play();
-
     setMusic();
-  }, [MusicOn, SoundOn, currentClickSound, isClicked]);
+  }, [isMusicOn, location, currentMusic, musicVolume]);
 
   return (
-
     <>
       <audio
-        src={menuMusic}
+        src={currentMusic}
         ref={musicRef}
-      />
-      <audio
-        src={currentClickSound}
-        ref={audioRef}
       />
     </>
   );
 };
 
 AudioComponent.defaultProps = {
-  MusicOn: false,
-  SoundOn: false,
-  isClicked: false,
-  // toggleMusic: () => {},
-  // toggleSound: () => {},
-  // getClick: () => {},
+  location: '/',
 };
 
 AudioComponent.propTypes = {
-  MusicOn: PropTypes.bool,
-  SoundOn: PropTypes.bool,
-  isClicked: PropTypes.bool,
-  // toggleMusic: PropTypes.func,
-  // toggleSound: PropTypes.func,
-  // getClick: PropTypes.func,
+  location: PropTypes.string,
 };
 
 export default AudioComponent;

@@ -1,0 +1,42 @@
+@mixin colomnFlex($j-c: center, $dir: column) {
+    display: flex;
+    flex-direction: $dir;
+    justify-content: $j-c;
+}
+
+@mixin centerFlex() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin fontA {
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+}
+
+@mixin fixed($pos) {
+  position: $pos;
+  left: 0;
+  right: 0;
+}
+
+@mixin equalSides($size) {
+  width: $size;
+  height: $size;
+}
+
+$maxWidth: 1400px;
+$champainePink: #F4D8CD;
+$salsa: #F15152;
+$dark: #1E555C;
+$peachy: #EDB183;
+$balck: #3A2E39;
+
+$b-shadow:3px 3px 10px 0 #212121;
+
+//green
+$green: #4AAD52;
+$june: #C5E063;
+
