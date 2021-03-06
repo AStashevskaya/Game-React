@@ -12,8 +12,8 @@ import ToggleBtn from '../elements/ToggleBtn';
 import {
   toggleMusic, toggleSound, turnDownMusic, turnUpMusic, turnDownSound, turnUpSound,
 } from '../../redux/music/action';
-import options from '../../constants/options';
-import menuLinks from '../../constants/menuLinks';
+import options from '../../constants/localisation/options';
+import menuLinks from '../../constants/localisation/menuLinks';
 import toggleLanguage from '../../redux/game/gameAction';
 import useLocalStorage from '../../hooks/useLocState';
 

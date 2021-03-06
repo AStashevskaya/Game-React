@@ -5,8 +5,8 @@ import { menuLink } from '../../data/navBarData';
 import MenuButton from './MenuButton';
 import Title from './options/Title';
 
-import SCORE_LOC from '../../constants/scores';
-import menuLinks from '../../constants/menuLinks';
+import SCORE_LOC from '../../constants/localisation/scores';
+import menuLinks from '../../constants/localisation/menuLinks';
 
 const ScoresPage = () => {
   const { path } = menuLink;

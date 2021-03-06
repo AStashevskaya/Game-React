@@ -9,8 +9,8 @@ import Title from '../Menu/options/Title';
 import MenuButton from '../Menu/MenuButton';
 import SmallButton from '../Menu/options/SmallButton';
 import { menuLink } from '../../data/navBarData';
-import menuLinks from '../../constants/menuLinks';
-import gameOver from '../../constants/game-over';
+import menuLinks from '../../constants/localisation/menuLinks';
+import gameOver from '../../constants/localisation/game-over';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {

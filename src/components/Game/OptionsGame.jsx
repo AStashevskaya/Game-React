@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 import { menuLink } from '../../data/navBarData';
-import menuLinks from '../../constants/menuLinks';
-import { GAME_BTNS, GAME_DISPLAYS } from '../../constants/btns';
+import menuLinks from '../../constants/localisation/menuLinks';
+import { GAME_BTNS, GAME_DISPLAYS } from '../../constants/localisation/btns';
 import MenuButton from '../Menu/MenuButton';
 import SmallButton from '../Menu/options/SmallButton';
 import Display from './Display';

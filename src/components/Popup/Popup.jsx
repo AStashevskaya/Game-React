@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
-import POPUP from '../../constants/popup';
+import POPUP from '../../constants/localisation/popup';
 
 const Popup = ({ trigger, isWin }) => {
   const lang = useSelector((state) => state.game.language);

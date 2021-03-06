@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { menuLink } from '../../data/navBarData';
-import menuLinks from '../../constants/menuLinks';
-import ABOUT from '../../constants/about';
+import menuLinks from '../../constants/localisation/menuLinks';
+import ABOUT from '../../constants/localisation/about';
 import MenuButton from './MenuButton';
 import Title from './options/Title';
 
