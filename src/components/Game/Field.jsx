@@ -16,7 +16,7 @@ const GameField = ({
   isFinished, setIsFinished, isReseted, isAutoplaying, finish,
 }) => {
   // eslint-disable-next-line no-unused-vars
-  const [cardsArr, setCardsArr] = useState(cards);
+  const [cardsArr, setCardsArr] = useState([]);
   const [openedCards, setOpendeCards] = useState([]);
   const [machedArr, setmachedArr] = useState([]);
   // eslint-disable-next-line no-unused-vars
@@ -30,7 +30,9 @@ const GameField = ({
 
   const handleClick = (card) => {
     if (isSoundOn && !isAutoplaying) playSwap();
+
     console.log(machedArr, 'mached', openedCards, 'openCards');
+
     if (!isPlaying || openedCards.length > 2 || machedArr.includes(card) || isAutoplaying) return;
 
     const flippedCard = cardsArr.find((el) => el.id === card.id);
@@ -41,30 +43,39 @@ const GameField = ({
     setOpendeCards([...openedCards, card]);
     console.log(cardsArr, openedCards);
   };
+
+  const onStart = useCallback(() => {
+    setCardsArr([...cards]);
+
+    if (!isPlaying) setTimeout(() => setIsplaying(!isPlaying), 2000);
+  }, [cards, isPlaying, setIsplaying]);
   /// /
   useEffect(() => {
-    console.log(isPlaying);
-    setTimeout(() => setIsplaying(!isPlaying), 2000);
-  }, []);
+    onStart();
+  }, [onStart]);
+
+  // useEffect(() => {
+
+  // }, [level]);
 
   const onFinish = useCallback(() => {
+    cardsArr.forEach((el) => {
+      el.isFlipped = false;
+    });
+    // cant understand why
     setTimeout(() => {
-      setIsplaying(false);
       cardsArr.forEach((el) => {
         el.isFlipped = false;
       });
-    }, 400);
-    setTimeout(() => {
-      setIsplaying(false);
-    }, 400);
+      // setIsplaying(!isPlaying);
+    }, 8000);
 
-    console.log('from on finish', machedArr, cardsArr, isPlaying);
-    setCardsArr(cardsArr);
+    // setIsFinished(!isFinished);
+    console.log(isPlaying, 'from onfinish');
     setmachedArr([]);
-  }, []);
+  }, [cardsArr]);
 
   useEffect(() => {
-    console.log('from open', isPlaying);
     if (openedCards.length === 2) {
       const [a, b] = openedCards;
       if (a.index === b.index && a.id !== b.id) {
@@ -85,31 +96,21 @@ const GameField = ({
         setTimeout(() => {
           cardsArr.forEach((el) => {
             if (machedArr.includes(el)) return;
-
             el.isFlipped = false;
           });
           if (isSoundOn) playSwap();
+
           setOpendeCards([]);
         }, 800);
       }
     }
-  }, [openedCards.length]);
+  }, [openedCards.length, setscore, setmachedArr, setOpendeCards, score]);
 
   useEffect(() => {
-    console.log(machedArr.length);
-    const checkIfWin = () => {
-      const { length } = cards;
-      console.log(machedArr, cards, ('mached + cards'));
+    const { length } = cards;
 
-      if (length === machedArr.length && isPlaying) {
-        onFinish();
-        // setIsplaying(false);
-        // finishCurrentPart();
-      }
-    };
-
-    checkIfWin();
-  }, [machedArr.length]);
+    if (length === machedArr.length && isPlaying) setTimeout(() => onFinish(), 1000);
+  }, [machedArr.length, onFinish, cards, isPlaying]);
 
   return (
     <div className="gamefield">

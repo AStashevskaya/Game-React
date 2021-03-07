@@ -13,6 +13,7 @@ import Display from './Display';
 import Timer from './Timer';
 
 const GameOptions = ({
+  // eslint-disable-next-line react/prop-types
   score, level, count, setCount, isWin, finish, reset, autoplay,
 }) => {
   const { path, title } = menuLink;
@@ -81,19 +82,19 @@ const GameOptions = ({
 
 GameOptions.defaultProps = {
   score: 0,
-  level: 0,
-  count: 63,
+  // level: 0,
+  // count: 63,
 };
 
 GameOptions.propTypes = {
   score: PropTypes.number,
-  level: PropTypes.number,
-  count: PropTypes.number,
-  setCount: PropTypes.func.isRequired,
-  isWin: PropTypes.bool.isRequired,
-  finish: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
-  autoplay: PropTypes.func.isRequired,
+  // level: PropTypes.number,
+  // count: PropTypes.number,
+  // setCount: PropTypes.func.isRequired,
+  // isWin: PropTypes.bool.isRequired,
+  // finish: PropTypes.func.isRequired,
+  // reset: PropTypes.func.isRequired,
+  // autoplay: PropTypes.func.isRequired,
 };
 
 export default GameOptions;

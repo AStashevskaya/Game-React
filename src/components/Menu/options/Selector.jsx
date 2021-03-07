@@ -39,7 +39,7 @@ const Selector = () => {
         value={size}
         onChange={handleChange}
       >
-        <MenuItem value={18}>18</MenuItem>
+        <MenuItem value={4}>4</MenuItem>
         <MenuItem value={24}>24</MenuItem>
         <MenuItem value={30}>30</MenuItem>
       </Select>

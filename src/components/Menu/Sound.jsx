@@ -20,29 +20,28 @@ const AudioComponent = ({ location }) => {
   const [currentMusic, setCurrentMusic] = useState(menuMusic);
   const music = musicRef.current;
 
-  const setMusic = () => {
-    if (!music) return;
-
-    if (location.endsWith('/#game')) {
-      setCurrentMusic(gameMusic);
-    } else if (location.endsWith('/#game-over')) {
-      setCurrentMusic(gameOverMusic);
-    } else {
-      setCurrentMusic(menuMusic);
-    }
-
-    if (isMusicOn) {
-      music.play();
-      music.loop = true;
-      music.volume = musicVolume;
-    }
-
-    if (!isMusicOn) music.pause();
-  };
-
   useEffect(() => {
+    const setMusic = () => {
+      if (!music) return;
+
+      if (location === '#game') {
+        setCurrentMusic(gameMusic);
+      } else if (location === '#game-over') {
+        setCurrentMusic(gameOverMusic);
+      } else {
+        setCurrentMusic(menuMusic);
+      }
+
+      if (isMusicOn) {
+        music.play();
+        music.loop = true;
+        music.volume = musicVolume;
+      }
+
+      if (!isMusicOn) music.pause();
+    };
     setMusic();
-  }, [isMusicOn, location, currentMusic, musicVolume]);
+  }, [isMusicOn, musicVolume, location, music, currentMusic]);
 
   return (
     <>
